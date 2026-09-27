@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
     if (process.env.NODE_ENV !== "production") {
       console.error("[contact]", err);
     }
-    return jsonError(502, "Could not send message. Please email me directly.");
+    return jsonError(502, "Could not send message. Please try again later.");
   }
 
   return Response.json({ ok: true });

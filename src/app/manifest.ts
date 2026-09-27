@@ -1,17 +1,16 @@
 import type { MetadataRoute } from "next";
-import { personalInfo } from "@/lib/constants";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${personalInfo.name} — Portfolio`,
-    short_name: personalInfo.name,
-    description: personalInfo.subtitle,
+    name: "Technology Company",
+    short_name: "Technology Company",
+    description: "Digital products, data, AI, and platform services.",
     start_url: "/",
     display: "standalone",
     background_color: "#050812",
     theme_color: "#8154ff",
     orientation: "portrait-primary",
-    categories: ["portfolio", "business"],
+    categories: ["business", "productivity"],
     icons: [
       {
         src: "/favicon.ico",

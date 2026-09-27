@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { inter, spaceGrotesk } from "./fonts";
-import { personalInfo } from "@/lib/constants";
 import Providers from "./providers";
 import "./globals.css";
 
@@ -9,40 +8,34 @@ const SITE_URL = "https://pedromarques.dev";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Pedro Marques | Full-Stack Developer & Data Scientist",
-    template: "%s | Pedro Marques",
+    default: "Technology Company | Digital Products, Data & Platforms",
+    template: "%s | Technology Company",
   },
   description:
-    "Full-Stack Developer and Data Scientist building intelligent, immersive digital experiences — from data pipelines to interactive frontends.",
+    "A technology company website exploring digital products, data, AI, and modern platforms.",
   keywords: [
-    "portfolio",
-    "developer",
-    "web development",
+    "technology company",
+    "digital products",
+    "data and AI",
+    "cloud platforms",
     "React",
     "Next.js",
-    "Three.js",
-    "TypeScript",
-    "creative developer",
   ],
-  authors: [{ name: "Pedro Marques", url: SITE_URL }],
-  creator: "Pedro Marques",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Pedro Marques | Full-Stack Developer & Data Scientist",
-    description:
-      "Full-Stack Developer & Data Scientist building intelligent digital experiences.",
+    title: "Technology Company | Digital Products, Data & Platforms",
+    description: "Explore technology services, solutions, work concepts, and perspectives.",
     type: "website",
     locale: "en_US",
-    siteName: "Pedro Marques",
+    siteName: "Technology Company",
     url: SITE_URL,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pedro Marques | Full-Stack Developer & Data Scientist",
-    description:
-      "Full-Stack Developer & Data Scientist building intelligent digital experiences.",
+    title: "Technology Company | Digital Products, Data & Platforms",
+    description: "Explore technology services, solutions, work concepts, and perspectives.",
   },
   robots: {
     index: true,
@@ -57,27 +50,18 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Person",
-      "@id": `${SITE_URL}/#person`,
-      name: personalInfo.name,
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "Technology Company",
       url: SITE_URL,
-      jobTitle: personalInfo.title,
-      email: personalInfo.email,
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: personalInfo.location,
-      },
-      sameAs: personalInfo.socials
-        .filter((s) => !s.url.startsWith("mailto:"))
-        .map((s) => s.url),
     },
     {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: `${personalInfo.name} — Portfolio`,
-      description: personalInfo.subtitle,
-      author: { "@id": `${SITE_URL}/#person` },
+      name: "Technology Company",
+      description: "A technology company website exploring digital products, data, AI, and platforms.",
+      publisher: { "@id": `${SITE_URL}/#organization` },
       inLanguage: "en",
     },
   ],
@@ -98,7 +82,7 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <a href="#hero" className="skip-to-main">Skip to main content</a>
+        <a href="#main-content" className="skip-to-main">Skip to main content</a>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -28,8 +28,7 @@ export default function Error({
         </p>
 
         <p className="mt-3 text-text-secondary">
-          An unexpected error occurred. This might be a temporary issue with the
-          3D rendering engine.
+          An unexpected error occurred. Please try again.
         </p>
 
         <button

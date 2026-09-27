@@ -11,18 +11,17 @@ beforeEach(() => scrollToMock.mockReset());
 afterEach(() => vi.restoreAllMocks());
 
 describe("<Footer />", () => {
-  it("renders copyright with the current year and the personal name", () => {
+  it("renders copyright with the current year and company name", () => {
     render(<Footer />);
     const year = new Date().getFullYear().toString();
     expect(screen.getByText(new RegExp(`${year}`))).toBeInTheDocument();
-    expect(screen.getByText(/Pedro Marques/i)).toBeInTheDocument();
+    expect(screen.getByText(/Technology Company/i)).toBeInTheDocument();
   });
 
-  it("shows the 'Built with…' tagline", () => {
+  it("links to the legal pages", () => {
     render(<Footer />);
-    expect(
-      screen.getByText(/Built with Next\.js, Three\.js & GSAP/i),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Privacy" })).toHaveAttribute("href", "/privacy");
+    expect(screen.getByRole("link", { name: "Terms" })).toHaveAttribute("href", "/terms");
   });
 
   it("calls lenis.scrollTo(0) when 'Back to top' is clicked", () => {

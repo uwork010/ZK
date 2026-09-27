@@ -2,38 +2,45 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import Navigation from "@/components/layout/Navigation";
 
-const scrollToMock = vi.fn();
-vi.mock("lenis/react", () => ({
-  useLenis: () => ({ scrollTo: scrollToMock }),
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/",
 }));
 
-beforeEach(() => {
-  scrollToMock.mockReset();
-});
+beforeEach(() => vi.clearAllMocks());
 
 afterEach(() => vi.restoreAllMocks());
 
 describe("<Navigation />", () => {
-  it("renders all nav links", () => {
+  it("renders the company routes and project CTA", () => {
     render(<Navigation />);
-    for (const label of ["Home", "About", "Projects", "Skills", "Contact"]) {
-      expect(
-        screen.getByRole("button", { name: new RegExp(`navigate to ${label}`, "i") }),
-      ).toBeInTheDocument();
+    for (const [label, href] of [
+      ["Home", "/"],
+      ["Services", "/services"],
+      ["Solutions", "/solutions"],
+      ["Industries", "/industries"],
+      ["Work", "/work"],
+      ["About", "/about"],
+      ["Insights", "/insights"],
+      ["Contact", "/contact"],
+      ["Start a Project", "/contact"],
+    ]) {
+      expect(screen.getByRole("link", { name: label })).toHaveAttribute("href", href);
     }
   });
 
-  it("uses lenis to scroll when a nav button is clicked (when target exists)", () => {
-    document.body.innerHTML += '<section id="about" />';
+  it("expands nested routes from the mobile menu", () => {
     render(<Navigation />);
-    fireEvent.click(screen.getByRole("button", { name: /navigate to about/i }));
-    expect(scrollToMock).toHaveBeenCalledOnce();
-    expect(scrollToMock.mock.calls[0][1]).toEqual({ offset: -80 });
+    fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
+    fireEvent.click(screen.getByRole("button", { name: /expand services submenu/i }));
+    expect(screen.getByRole("link", { name: "Product Engineering" })).toHaveAttribute(
+      "href",
+      "/services/product-engineering",
+    );
   });
 
   it("toggles the mobile menu and reflects aria-expanded", () => {
     render(<Navigation />);
-    const toggle = screen.getByLabelText(/toggle menu/i);
+    const toggle = screen.getByLabelText(/open menu/i);
     expect(toggle).toHaveAttribute("aria-expanded", "false");
     fireEvent.click(toggle);
     expect(toggle).toHaveAttribute("aria-expanded", "true");
@@ -41,12 +48,8 @@ describe("<Navigation />", () => {
     expect(toggle).toHaveAttribute("aria-expanded", "false");
   });
 
-  it("uses aria-current='page' (not 'true') for the active link", () => {
-    // The 'hero' section starts active by default in the component state.
+  it("uses aria-current='page' on the active route", () => {
     render(<Navigation />);
-    const home = screen.getByRole("button", { name: /navigate to home/i });
-    const value = home.getAttribute("aria-current");
-    // Either "page" or null — never the deprecated "true".
-    expect(value === null || value === "page").toBe(true);
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("aria-current", "page");
   });
 });

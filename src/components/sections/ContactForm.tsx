@@ -67,8 +67,8 @@ export default function ContactForm() {
         className="flex flex-col items-center gap-3 rounded-2xl border border-primary/30 bg-primary/5 p-8 text-center"
       >
         <CheckCircle2 className="text-primary" size={32} />
-        <p className="text-base font-medium text-white">Message sent — thanks!</p>
-        <p className="text-sm text-text-secondary">I&apos;ll get back to you as soon as I can.</p>
+      <p className="text-base font-medium text-white">Message sent — thanks!</p>
+      <p className="text-sm text-text-secondary">We&apos;ll get back to you as soon as we can.</p>
         <button
           type="button"
           onClick={() => setStatus({ kind: "idle" })}
@@ -102,7 +102,7 @@ export default function ContactForm() {
             required
             disabled={sending}
             className={inputClass}
-            placeholder="Ada Lovelace"
+            placeholder="Your name"
             aria-invalid={Boolean(errors.name)}
             aria-describedby={errors.name ? "contact-name-error" : undefined}
           />
@@ -123,7 +123,7 @@ export default function ContactForm() {
             required
             disabled={sending}
             className={inputClass}
-            placeholder="ada@example.com"
+            placeholder="you@example.com"
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? "contact-email-error" : undefined}
           />

@@ -27,19 +27,19 @@ export async function sendContactEmail(input: ContactInput) {
   if (!to) throw new Error("CONTACT_TO_EMAIL is not set");
 
   const html = `
-    <h2>New portfolio contact</h2>
+    <h2>New website contact</h2>
     <p><strong>From:</strong> ${escapeHtml(input.name)} &lt;${escapeHtml(input.email)}&gt;</p>
     <p><strong>Message:</strong></p>
     <pre style="white-space:pre-wrap;font-family:ui-sans-serif,system-ui,sans-serif">${escapeHtml(input.message)}</pre>
   `;
 
-  const text = `New portfolio contact\n\nFrom: ${input.name} <${input.email}>\n\nMessage:\n${input.message}\n`;
+  const text = `New website contact\n\nFrom: ${input.name} <${input.email}>\n\nMessage:\n${input.message}\n`;
 
   const result = await getClient().emails.send({
     from,
     to,
     replyTo: input.email,
-    subject: `Portfolio contact — ${input.name}`,
+    subject: `Website contact — ${input.name}`,
     html,
     text,
   });

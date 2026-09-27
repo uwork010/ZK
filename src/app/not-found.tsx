@@ -24,18 +24,17 @@ export default function NotFound() {
         </span>
 
         <p className="mt-4 font-display text-xl font-medium text-white sm:text-2xl">
-          Lost in space
+          Page not found
         </p>
 
         <p className="mt-3 text-text-secondary">
-          The page you&apos;re looking for doesn&apos;t exist or has drifted
-          into another galaxy.
+          The page you&apos;re looking for doesn&apos;t exist or may have moved.
         </p>
 
         <div className="mt-8">
           <MagneticButton onClick={goHome}>
             <MoveLeft size={16} />
-            Back to Earth
+            Back to Home
           </MagneticButton>
         </div>
       </div>

@@ -34,30 +34,26 @@ export default function CustomCursor() {
       dotYTo(e.clientY);
     };
 
-    const handleMouseEnterInteractive = () => {
-      if (cursor) gsap.to(cursor, { scale: 1.8, opacity: 0.6, duration: 0.3 });
-    };
-
-    const handleMouseLeaveInteractive = () => {
-      if (cursor) gsap.to(cursor, { scale: 1, opacity: 1, duration: 0.3 });
+    const handleInteractiveMouse = (e: MouseEvent) => {
+      if (!(e.target instanceof Element)) return;
+      const target = e.target.closest("a, button, [data-cursor-hover]");
+      if (!target) return;
+      const related = e.relatedTarget instanceof Element
+        ? e.relatedTarget.closest("a, button, [data-cursor-hover]")
+        : null;
+      if (related) return;
+      const entering = e.type === "mouseover";
+      if (cursor) gsap.to(cursor, { scale: entering ? 1.8 : 1, opacity: entering ? 0.6 : 1, duration: 0.3 });
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-
-    const interactiveElements = document.querySelectorAll(
-      "a, button, [data-cursor-hover]"
-    );
-    interactiveElements.forEach((el) => {
-      el.addEventListener("mouseenter", handleMouseEnterInteractive);
-      el.addEventListener("mouseleave", handleMouseLeaveInteractive);
-    });
+    document.addEventListener("mouseover", handleInteractiveMouse);
+    document.addEventListener("mouseout", handleInteractiveMouse);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      interactiveElements.forEach((el) => {
-        el.removeEventListener("mouseenter", handleMouseEnterInteractive);
-        el.removeEventListener("mouseleave", handleMouseLeaveInteractive);
-      });
+      document.removeEventListener("mouseover", handleInteractiveMouse);
+      document.removeEventListener("mouseout", handleInteractiveMouse);
     };
   }, [isTouch, q.customCursor, mounted]);
 

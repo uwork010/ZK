@@ -1,8 +1,20 @@
-# Pedro Marques — Portfolio
+# Technology Company Website
 
-Personal portfolio featuring a 3D galaxy theme with an interactive solar system project showcase.
+Multi-page technology company website architecture using the existing immersive portfolio homepage and Three.js scene as the visual foundation. The company profile, work concepts, insights, and legal pages contain clearly identified placeholder copy and need approved content before launch.
 
-**Live:** [portfolio-pedromarques-dev.vercel.app](https://portfolio-pedromarques-dev.vercel.app/)
+## Routes
+
+- `/` — existing immersive homepage
+- `/services` and `/services/[slug]`
+- `/solutions` and `/solutions/[slug]`
+- `/industries` and `/industries/[slug]`
+- `/work` and `/work/[slug]` — sample/demo concepts only
+- `/about`
+- `/insights` and `/insights/[slug]` — sample editorial concepts
+- `/contact`
+- `/privacy` and `/terms` — draft placeholders, not launch-ready legal copy
+
+Navigation and content slugs are defined in `src/lib/company-content.ts`. Dynamic detail routes are generated from those entries.
 
 ## Tech Stack
 
@@ -15,10 +27,11 @@ Personal portfolio featuring a 3D galaxy theme with an interactive solar system 
 
 ## Features
 
-- Interactive 3D galaxy background with adaptive quality detection
+- Interactive 3D galaxy background with configured quality presets
 - Solar system visualization for project showcase
 - Smooth scroll-driven animations
-- Custom cursor, magnetic buttons, glass cards
+- Route-aware desktop navigation and nested mobile menus
+- Custom cursor, magnetic buttons, glass styling, and responsive layouts
 - Full SEO (Open Graph, sitemap, robots)
 - Responsive design with mobile optimizations
 
@@ -26,7 +39,6 @@ Personal portfolio featuring a 3D galaxy theme with an interactive solar system 
 
 ```bash
 npm install
-cp .env.example .env.local   # then fill RESEND_API_KEY + CONTACT_TO_EMAIL
 npm run dev
 ```
 
@@ -47,40 +59,36 @@ npm run test:coverage # vitest + v8 coverage report
 
 ## Testing
 
-Vitest + @testing-library/react with jsdom. **125 tests across libs, hooks,
-the contact API route, and every UI / layout / section component.** Coverage
-sits around **83% statements / 78% branches**, with `lib/`, `hooks/`,
-`api/contact`, and most components at or near 100%. See
+Vitest + @testing-library/react with jsdom. **132 tests** cover libraries,
+hooks, the contact API route, navigation, and UI / layout / section components. See
 [tests/README.md](tests/README.md) for the testing strategy and what is
 intentionally covered by Playwright instead (3D / WebGL).
 
 ## Environment
 
-The contact form (`src/app/api/contact/route.ts`) needs:
+The contact form at `/contact` uses the existing endpoint (`src/app/api/contact/route.ts`) and needs:
 
 - `RESEND_API_KEY` — sign up at [resend.com](https://resend.com) (free tier: 100 emails/day)
 - `CONTACT_TO_EMAIL` — where submissions are delivered
 - `CONTACT_FROM_EMAIL` — optional verified sender (defaults to Resend's onboarding sender)
 
-Without these set, the API endpoint returns 502 and the form gracefully falls back to the visible mailto link.
+Without these set, submissions cannot be delivered and the form displays an error. Configure the recipient and sender for the organization before launch.
 
 ## Project Structure
 
 ```
 src/
-├── app/            # Pages, layout, SEO, providers
+├── app/
+│   ├── (site)/     # Shared site shell and all public page routes
+│   ├── api/        # Contact endpoint
+│   └── ...         # Root metadata, SEO, providers, and global styles
 ├── components/
 │   ├── layout/     # Navigation, Footer, CustomCursor, Preloader
 │   ├── sections/   # Hero, About, Projects, Skills, Contact
+│   ├── company/    # Reusable company listing and detail page templates
 │   ├── three/      # Galaxy, StarField, SolarSystem, ScrollCamera
 │   └── ui/         # GlassCard, ScrollReveal, GradientText, MagneticButton
 ├── hooks/          # useMediaQuery, useScrollProgress, useMousePosition
-├── lib/            # Constants, utilities, GSAP config, quality detection
+├── lib/            # Company content, portfolio constants, utilities, GSAP config
 └── types/          # TypeScript interfaces
 ```
-
-## Contact
-
-- **Email:** pedrom02.dev@gmail.com
-- **LinkedIn:** [Pedro Marques](https://www.linkedin.com/in/pedro-marques-056baa366/)
-- **GitHub:** [Pedrom2002](https://github.com/Pedrom2002)
