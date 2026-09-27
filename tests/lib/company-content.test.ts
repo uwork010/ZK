@@ -17,6 +17,23 @@ const detailRoutes: Record<string, { slug: string }[]> = {
 };
 
 describe("company navigation destinations", () => {
+  it("includes the full requested services direction", () => {
+    expect(serviceEntries.map(({ title }) => title)).toEqual([
+      "Web Development",
+      "Mobile App Development",
+      "MVP & Product Development",
+      "Custom Software",
+      "AI & Automation",
+      "Game Development",
+      "Quality Assurance",
+      "Cloud & DevOps",
+      "UI/UX Design",
+      "Graphic Design & Branding",
+      "3D / Video / Creative",
+      "Maintenance & Support",
+    ]);
+  });
+
   it("keeps every primary link on a defined page route", () => {
     const routes = new Set([
       "/",

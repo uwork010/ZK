@@ -1,7 +1,7 @@
 "use client";
 
 import { type ReactNode } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface GlassCardProps {
@@ -15,13 +15,15 @@ export default function GlassCard({
   className,
   hover = true,
 }: GlassCardProps) {
+  const reducedMotion = useReducedMotion();
+
   return (
     <motion.div
-      whileHover={hover ? { y: -6, scale: 1.01 } : undefined}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      whileHover={hover && !reducedMotion ? { y: -3 } : undefined}
+      transition={{ duration: 0.22, ease: "easeOut" }}
       className={cn(
-        "glass overflow-hidden rounded-2xl p-6 transition-shadow duration-300",
-        hover && "hover:shadow-lg hover:shadow-primary/10 hover:border-primary/20",
+        "glass overflow-hidden rounded-xl p-6 transition-colors duration-300",
+        hover && "glass-hover",
         className
       )}
     >

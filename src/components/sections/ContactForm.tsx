@@ -11,7 +11,7 @@ type Status =
   | { kind: "error"; message: string };
 
 const inputClass =
-  "w-full rounded-xl border border-white/[0.08] bg-galaxy-darker/90 px-4 py-3 text-sm text-white placeholder:text-text-secondary/50 outline-none transition-colors focus:border-primary/60 focus:bg-galaxy-darker focus:ring-2 focus:ring-primary/20";
+  "w-full rounded-xl border border-glass-border bg-[var(--bg-primary)]/90 px-4 py-3 text-sm text-white placeholder:text-text-secondary/50 outline-none transition-colors focus:border-primary/60 focus:bg-[var(--bg-primary)] focus:ring-2 focus:ring-primary/20";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
@@ -55,7 +55,7 @@ export default function ContactForm() {
     } catch {
       setStatus({
         kind: "error",
-        message: "Network error. Please try again or email me directly.",
+        message: "Network error. Please try again later.",
       });
     }
   }
@@ -67,8 +67,8 @@ export default function ContactForm() {
         className="flex flex-col items-center gap-3 rounded-2xl border border-primary/30 bg-primary/5 p-8 text-center"
       >
         <CheckCircle2 className="text-primary" size={32} />
-      <p className="text-base font-medium text-white">Message sent — thanks!</p>
-      <p className="text-sm text-text-secondary">We&apos;ll get back to you as soon as we can.</p>
+        <p className="text-base font-medium text-white">Message sent — thanks!</p>
+        <p className="text-sm text-text-secondary">We&apos;ll get back to you as soon as we can.</p>
         <button
           type="button"
           onClick={() => setStatus({ kind: "idle" })}
@@ -86,7 +86,7 @@ export default function ContactForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="space-y-4 rounded-2xl border border-white/[0.08] bg-[#050812]/85 p-6 text-left shadow-2xl shadow-primary/5 backdrop-blur-xl sm:p-7"
+      className="glass space-y-4 rounded-xl p-6 text-left sm:p-7"
       aria-label="Contact form"
     >
       <div className="grid gap-4 sm:grid-cols-2">
@@ -169,7 +169,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={sending}
-        className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-galaxy-darker transition-all duration-200 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
         {sending ? (
           <>

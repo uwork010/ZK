@@ -16,7 +16,7 @@ export default function NotFound() {
 
   return (
     <div className="relative z-10 flex h-screen flex-col items-center justify-center px-6 text-center">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#050812_80%)]" />
+      <div className="fallback-atmosphere absolute inset-0" />
 
       <div className="relative z-10 max-w-md">
         <span className="font-display text-8xl font-bold gradient-text sm:text-9xl">

@@ -19,5 +19,5 @@ export default async function InsightDetail({ params }: Props) {
   const { slug } = await params;
   const entry = insightEntries.find((item) => item.slug === slug);
   if (!entry) notFound();
-  return <DetailPage entry={entry} backHref="/insights" backLabel="All insights" />;
+  return <DetailPage entry={entry} backHref="/insights" backLabel="All insights" atmosphere="insights" />;
 }

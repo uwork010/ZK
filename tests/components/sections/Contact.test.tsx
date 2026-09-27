@@ -1,7 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import Contact from "@/components/sections/Contact";
-import { personalInfo } from "@/lib/constants";
 
 vi.mock("@gsap/react", () => ({
   useGSAP: (cb: () => void) => cb(),
@@ -18,10 +17,10 @@ vi.mock("@/components/sections/ContactForm", () => ({
 afterEach(() => vi.restoreAllMocks());
 
 describe("<Contact />", () => {
-  it("renders the 'Let's Work Together' heading", () => {
+  it("renders the company contact heading", () => {
     render(<Contact />);
     expect(
-      screen.getByRole("heading", { level: 2, name: /let.+s work together/i }),
+      screen.getByRole("heading", { level: 2, name: /let.+s make something matter/i }),
     ).toBeInTheDocument();
   });
 
@@ -30,27 +29,8 @@ describe("<Contact />", () => {
     expect(screen.getByTestId("contact-form")).toBeInTheDocument();
   });
 
-  it("renders the personal email as a mailto link", () => {
+  it("links to the company services overview", () => {
     render(<Contact />);
-    const link = screen.getByRole("link", { name: personalInfo.email });
-    expect(link).toHaveAttribute("href", `mailto:${personalInfo.email}`);
-  });
-
-  it("renders both CV download links", () => {
-    render(<Contact />);
-    expect(
-      screen.getByRole("link", { name: /software engineering/i }),
-    ).toHaveAttribute("href", "/Pedro_Marques_CV_Software_Developer.pdf");
-    expect(
-      screen.getByRole("link", { name: /data science/i }),
-    ).toHaveAttribute("href", "/Pedro_Marques_CV_Data_Scientist.pdf");
-  });
-
-  it("renders all social links from constants", () => {
-    render(<Contact />);
-    for (const social of personalInfo.socials) {
-      const link = screen.getByLabelText(social.name);
-      expect(link).toHaveAttribute("href", social.url);
-    }
+    expect(screen.getByRole("link", { name: /explore services/i })).toHaveAttribute("href", "/services");
   });
 });

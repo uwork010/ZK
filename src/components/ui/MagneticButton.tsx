@@ -1,6 +1,8 @@
 "use client";
 
 import { useRef, useEffect, type ReactNode } from "react";
+import Link from "next/link";
+import { useReducedMotion } from "framer-motion";
 import { gsap } from "@/lib/gsap-config";
 import { useIsTouchDevice } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
@@ -22,13 +24,14 @@ export default function MagneticButton({
 }: MagneticButtonProps) {
   const ref = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
   const isTouch = useIsTouchDevice();
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
-    if (isTouch || !ref.current) return;
+    if (isTouch || reducedMotion || !ref.current) return;
     const el = ref.current;
 
-    const xTo = gsap.quickTo(el, "x", { duration: 1, ease: "elastic.out(1, 0.3)" });
-    const yTo = gsap.quickTo(el, "y", { duration: 1, ease: "elastic.out(1, 0.3)" });
+    const xTo = gsap.quickTo(el, "x", { duration: 0.45, ease: "power3.out" });
+    const yTo = gsap.quickTo(el, "y", { duration: 0.45, ease: "power3.out" });
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = el.getBoundingClientRect();
@@ -50,15 +53,27 @@ export default function MagneticButton({
       el.removeEventListener("mousemove", handleMouseMove as EventListener);
       el.removeEventListener("mouseleave", handleMouseLeave as EventListener);
     };
-  }, [isTouch, magneticStrength]);
+  }, [isTouch, reducedMotion, magneticStrength]);
 
   const sharedClasses = cn(
     "badge group relative gap-2 rounded-full font-display text-sm font-semibold tracking-wide uppercase transition-colors duration-300",
-    "bg-primary text-white hover:bg-primary-light",
+    "bg-primary text-galaxy-darker hover:bg-primary-light",
     className
   );
 
   if (href) {
+    if (href.startsWith("/")) {
+      return (
+        <Link
+          ref={ref as React.RefObject<HTMLAnchorElement>}
+          href={href}
+          className={sharedClasses}
+        >
+          {children}
+        </Link>
+      );
+    }
+
     return (
       <a
         ref={ref as React.RefObject<HTMLAnchorElement>}

@@ -1,101 +1,51 @@
-"use client";
-
-import { useRef } from "react";
-import { motion } from "framer-motion";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap-config";
-import { personalInfo } from "@/lib/constants";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { agencyServiceGroups } from "@/lib/constants";
 import GradientText from "@/components/ui/GradientText";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import SectionDivider from "@/components/ui/SectionDivider";
-
-function AnimatedCounter({ value, label, index }: { value: string; label: string; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    if (!ref.current) return;
-    gsap.from(ref.current, {
-      y: 30,
-      opacity: 0,
-      duration: 0.6,
-      delay: index * 0.15,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ref.current,
-        start: "top 90%",
-      },
-    });
-  }, { scope: ref });
-
-  return (
-    <motion.div
-      ref={ref}
-      whileHover={{ scale: 1.05, y: -2 }}
-      transition={{ type: "spring", stiffness: 400, damping: 15 }}
-      className="group relative flex flex-col items-center gap-1.5 rounded-xl border border-glass-border bg-galaxy-dark/50 p-4 text-center transition-colors duration-300 hover:border-primary/30 hover:bg-primary/5"
-    >
-      <span className="font-display text-3xl font-bold text-primary sm:text-4xl">
-        {value}
-      </span>
-      <span className="text-xs font-medium uppercase tracking-wider text-text-secondary">
-        {label}
-      </span>
-      {/* Subtle glow on hover */}
-      <div className="absolute inset-0 -z-10 rounded-xl bg-primary/5 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
-    </motion.div>
-  );
-}
 
 export default function About() {
   return (
     <section className="section-padding relative">
       <SectionDivider />
-      <div className="mx-auto max-w-5xl">
-        {/* Section header */}
+      <div className="mx-auto max-w-6xl">
         <ScrollReveal>
           <div className="flex items-center gap-4">
-            <span className="font-display text-sm font-medium tracking-widest text-primary/60 uppercase">01</span>
-            <div className="h-px flex-1 bg-gradient-to-r from-primary/30 to-transparent" />
+            <span className="font-display text-xs font-medium uppercase tracking-[0.18em] text-primary/75">01 / Approach</span>
+            <div className="h-px flex-1 bg-gradient-to-r from-primary/35 to-transparent" />
           </div>
-          <GradientText as="h2" className="mt-4 font-display text-3xl font-bold sm:text-4xl md:text-5xl">
-            About Me
+          <GradientText as="h2" className="mt-4 max-w-4xl font-display text-3xl font-bold sm:text-4xl md:text-5xl">
+            Technology and creative, working as one.
           </GradientText>
         </ScrollReveal>
 
-        <div className="mt-12 grid gap-12 lg:grid-cols-5">
-          {/* Bio */}
-          <div className="lg:col-span-3">
-            <ScrollReveal delay={0.1}>
-              <p className="text-lg leading-relaxed text-text-secondary">
-                {personalInfo.bio}
-              </p>
-            </ScrollReveal>
+        <div className="mt-9 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-16">
+          <ScrollReveal delay={0.08}>
+            <p className="max-w-2xl text-lg leading-8 text-text-secondary">
+              We build digital products, software, AI solutions, websites, apps, games, and creative experiences from idea to launch. The work begins with the problem and brings design, engineering, and delivery into the same conversation.
+            </p>
+            <Link href="/about" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-primary-light transition-colors hover:text-white">
+              About the company <ArrowRight size={15} />
+            </Link>
+          </ScrollReveal>
 
-            {/* Location badge */}
-            <ScrollReveal delay={0.3}>
-              <div className="badge mt-8 gap-1 whitespace-nowrap rounded-full border border-glass-border bg-glass-bg">
-                <span className="text-sm">📍</span>
-                <span className="text-sm text-text-secondary">Based in <span className="font-medium text-white">{personalInfo.location}</span></span>
+          <ScrollReveal delay={0.14}>
+            <div className="glass rounded-xl p-5 sm:p-6">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-text-secondary/70">A connected service spectrum</p>
+              <div className="mt-5 grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+                {agencyServiceGroups.map((group) => (
+                  <div key={group.name}>
+                    <div className="mb-2 h-px w-8 bg-primary/65" />
+                    <h3 className="font-display text-sm font-semibold text-white">{group.name}</h3>
+                  </div>
+                ))}
               </div>
-            </ScrollReveal>
-            <div className="mt-14" />
-          </div>
-
-          {/* Stats Grid */}
-          <div className="lg:col-span-2">
-            <div className="grid grid-cols-2 gap-3">
-              {personalInfo.stats.map((stat, i) => (
-                <AnimatedCounter
-                  key={stat.label}
-                  value={stat.value}
-                  label={stat.label}
-                  index={i}
-                />
-              ))}
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
   );
 }
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-text-secondary/70">A connected service spectrum</p>

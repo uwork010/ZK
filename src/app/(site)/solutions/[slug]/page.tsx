@@ -19,5 +19,5 @@ export default async function SolutionDetail({ params }: Props) {
   const { slug } = await params;
   const entry = solutionEntries.find((item) => item.slug === slug);
   if (!entry) notFound();
-  return <DetailPage entry={entry} backHref="/solutions" backLabel="All solutions" />;
+  return <DetailPage entry={entry} backHref="/solutions" backLabel="All solutions" atmosphere="solutions" />;
 }

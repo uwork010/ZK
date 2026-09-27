@@ -1,20 +1,23 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { usePathname } from "next/navigation";
 import CanvasErrorBoundary from "@/components/three/CanvasErrorBoundary";
 
 const GalaxyCanvas = dynamic(
   () => import("@/components/three/GalaxyCanvas"),
   {
     ssr: false,
-    loading: () => <div className="fixed inset-0 bg-[#050812]" />,
+    loading: () => <div className="pointer-events-none fixed inset-0 bg-galaxy-darker" />,
   }
 );
 
 export default function GalaxyBackground() {
+  const pathname = usePathname();
+
   return (
     <CanvasErrorBoundary>
-      <GalaxyCanvas />
+      <GalaxyCanvas isHome={pathname === "/"} />
     </CanvasErrorBoundary>
   );
 }

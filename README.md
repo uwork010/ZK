@@ -59,8 +59,8 @@ npm run test:coverage # vitest + v8 coverage report
 
 ## Testing
 
-Vitest + @testing-library/react with jsdom. **132 tests** cover libraries,
-hooks, the contact API route, navigation, and UI / layout / section components. See
+Vitest + @testing-library/react with jsdom covers libraries, hooks, the contact API
+route, navigation, and UI / layout / section components. See
 [tests/README.md](tests/README.md) for the testing strategy and what is
 intentionally covered by Playwright instead (3D / WebGL).
 

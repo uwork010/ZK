@@ -14,10 +14,10 @@ vi.mock("@/lib/gsap-config", () => ({
 afterEach(() => vi.restoreAllMocks());
 
 describe("<ProjectsHeader />", () => {
-  it("renders the 'Featured Projects' heading", () => {
+  it("renders the sample concepts heading", () => {
     render(<ProjectsHeader />);
     expect(
-      screen.getByRole("heading", { level: 2, name: /featured projects/i }),
+      screen.getByRole("heading", { level: 2, name: /selected work concepts/i }),
     ).toBeInTheDocument();
   });
 });
@@ -42,19 +42,10 @@ describe("<ProjectDetail />", () => {
     },
   );
 
-  it("renders the Github link when githubUrl is set", () => {
-    const project = projects[0];
+  it("labels every planet-linked item as a sample and avoids invented client links", () => {
     render(<ProjectDetail index={0} />);
-    const link = screen.getByRole("link", { name: /github repo link/i });
-    expect(link).toHaveAttribute("href", project.githubUrl);
-    expect(link).toHaveAttribute("target", "_blank");
-    expect(link).toHaveAttribute("rel", "noopener noreferrer");
-  });
-
-  it("renders the Live Demo link only when demoUrl is set", () => {
-    const projectWithDemo = projects.findIndex((p) => p.demoUrl);
-    render(<ProjectDetail index={projectWithDemo} />);
-    const demo = screen.getByRole("link", { name: /live demo/i });
-    expect(demo).toHaveAttribute("href", projects[projectWithDemo].demoUrl!);
+    expect(screen.getAllByText(/sample \/ demo concept/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.queryByRole("link", { name: /github|live demo/i })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /explore all work concepts/i })).toHaveAttribute("href", "/work");
   });
 });

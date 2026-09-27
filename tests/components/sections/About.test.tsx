@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import About from "@/components/sections/About";
-import { personalInfo } from "@/lib/constants";
+import { agencyServiceGroups } from "@/lib/constants";
 
 vi.mock("@gsap/react", () => ({
   useGSAP: (cb: () => void) => cb(),
@@ -19,25 +19,20 @@ describe("<About />", () => {
   it("renders the section heading", () => {
     render(<About />);
     expect(
-      screen.getByRole("heading", { level: 2, name: /about me/i }),
+      screen.getByRole("heading", { level: 2, name: /technology and creative, working as one/i }),
     ).toBeInTheDocument();
   });
 
-  it("renders the bio from constants", () => {
+  it("renders company-first positioning", () => {
     render(<About />);
-    expect(screen.getByText(personalInfo.bio)).toBeInTheDocument();
+    expect(screen.getByText(/we build digital products, software, AI solutions/i)).toBeInTheDocument();
   });
 
-  it("renders the location badge", () => {
+  it("renders the service disciplines without personal stats", () => {
     render(<About />);
-    expect(screen.getByText(personalInfo.location)).toBeInTheDocument();
-  });
-
-  it("renders all stats", () => {
-    render(<About />);
-    for (const stat of personalInfo.stats) {
-      expect(screen.getByText(stat.value)).toBeInTheDocument();
-      expect(screen.getByText(stat.label)).toBeInTheDocument();
+    for (const group of agencyServiceGroups) {
+      expect(screen.getByText(group.name)).toBeInTheDocument();
     }
+    expect(screen.queryByText(/projects built|ML models/i)).not.toBeInTheDocument();
   });
 });

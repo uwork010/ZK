@@ -7,11 +7,11 @@ export default function AboutPage() {
   return <CompanyInfoPage
     eyebrow="About"
     title="Technology, shaped around the problem."
-    intro="This company profile is a starting point for the organization’s story. Add verified details about the team, purpose, and operating principles here."
+    intro="Digital products, software, AI, and creative work can begin in different places. The aim is to bring the right disciplines together around the problem and carry a clear idea toward launch."
     sections={[
-      { title: "Company profile", body: "Replace this section with an approved company introduction, including its purpose, history, and the people behind the work." },
-      { title: "How we work", body: "Describe the company’s actual collaboration model, decision-making practices, and delivery approach once those details are confirmed." },
-      { title: "What we build", body: "Use this space to summarize the company’s verified capabilities and the kinds of technology challenges it chooses to take on." },
+      { title: "Technology", body: "Web and mobile development, custom software, AI and automation, cloud foundations, quality assurance, and ongoing support." },
+      { title: "Creative", body: "Product experience, UI/UX, graphic design, branding, game development, 3D, and video directions." },
+      { title: "From idea to launch", body: "A project can begin with an early concept or a defined technical need. Scope, team, and delivery approach are set around the work rather than assumed in advance." },
     ]}
   />;
 }

@@ -17,7 +17,7 @@ export default function Image() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #050812 0%, #0a0e27 40%, #1a1f3a 100%)",
+          background: "linear-gradient(135deg, #050b16 0%, #0a1424 48%, #101f33 100%)",
           fontFamily: "system-ui, sans-serif",
         }}
       >
@@ -30,7 +30,7 @@ export default function Image() {
             width: 400,
             height: 400,
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(129,84,255,0.15) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(139,123,232,0.12) 0%, transparent 70%)",
           }}
         />
         <div
@@ -41,7 +41,7 @@ export default function Image() {
             width: 300,
             height: 300,
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(0,245,255,0.1) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(102,223,247,0.11) 0%, transparent 70%)",
           }}
         />
 
@@ -62,8 +62,8 @@ export default function Image() {
               gap: 8,
               padding: "8px 20px",
               borderRadius: 999,
-              border: "1px solid rgba(129,84,255,0.3)",
-              background: "rgba(129,84,255,0.08)",
+              border: "1px solid rgba(102,223,247,0.25)",
+              background: "rgba(102,223,247,0.06)",
               fontSize: 14,
               color: "#a1b1c7",
               letterSpacing: 2,
@@ -85,7 +85,7 @@ export default function Image() {
             style={{
               fontSize: 72,
               fontWeight: 700,
-              background: "linear-gradient(135deg, #8154ff 0%, #00f5ff 50%, #a37fff 100%)",
+              background: "linear-gradient(115deg, #c3f3ff 0%, #66dff7 58%, #8b7be8 100%)",
               backgroundClip: "text",
               color: "transparent",
               lineHeight: 1.1,
@@ -100,7 +100,7 @@ export default function Image() {
             style={{
               width: 64,
               height: 1,
-              background: "linear-gradient(90deg, transparent, #8154ff, transparent)",
+              background: "linear-gradient(90deg, transparent, #66dff7, transparent)",
               margin: "4px 0",
             }}
           />
@@ -109,7 +109,7 @@ export default function Image() {
           <div
             style={{
               fontSize: 28,
-              color: "#a37fff",
+              color: "#c3f3ff",
               fontWeight: 500,
             }}
           >

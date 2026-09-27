@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
+import { useReducedMotion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap-config";
 
@@ -20,9 +21,10 @@ export default function ScrollReveal({
   duration = 0.8,
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
 
   useGSAP(() => {
-    if (!ref.current) return;
+    if (!ref.current || reducedMotion) return;
 
     gsap.from(ref.current, {
       y,

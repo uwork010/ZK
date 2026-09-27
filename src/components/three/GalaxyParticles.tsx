@@ -32,7 +32,7 @@ function smoothstep(edge0: number, edge1: number, x: number): number {
 // the file lint-clean without changing runtime behaviour.
 /* eslint-disable react-hooks/purity, react-hooks/immutability */
 
-export default function GalaxyParticles() {
+export default function GalaxyParticles({ ambient = false }: { ambient?: boolean }) {
   const pointsRef = useRef<THREE.Points>(null);
   const mouse = useMousePosition();
   const smoothMouse = useRef({ x: 0, y: 0 });
@@ -108,8 +108,8 @@ export default function GalaxyParticles() {
 
     // Fade out galaxy when solar system appears, bring it back at contact
     const sp = scrollProgress.current;
-    const fadeOut = sp < 0.14 ? 1 : sp > 0.20 ? 0 : 1 - (sp - 0.14) / 0.06;
-    const fadeIn = sp < 0.90 ? 0 : sp > 0.98 ? 1 : (sp - 0.90) / 0.08;
+    const fadeOut = ambient ? 1 : sp < 0.14 ? 1 : sp > 0.20 ? 0 : 1 - (sp - 0.14) / 0.06;
+    const fadeIn = ambient ? 0 : sp < 0.90 ? 0 : sp > 0.98 ? 1 : (sp - 0.90) / 0.08;
     const galaxyOpacity = Math.max(fadeOut, fadeIn * 0.7);
     const mat = pointsRef.current.material as THREE.PointsMaterial;
     mat.opacity = 0.9 * galaxyOpacity;
@@ -143,7 +143,7 @@ export default function GalaxyParticles() {
     // Mouse interaction: active during hero (first 20%) and contact (final section)
     const heroInteraction = Math.max(0, 1 - sp / 0.20);
     const contactInteraction = fadeIn;
-    const interactionStrength = Math.max(heroInteraction, contactInteraction);
+    const interactionStrength = ambient ? 0.38 : Math.max(heroInteraction, contactInteraction);
 
     smoothMouse.current.x += (mouse.current.normalizedX - smoothMouse.current.x) * 0.12;
     smoothMouse.current.y += (mouse.current.normalizedY - smoothMouse.current.y) * 0.12;
@@ -193,7 +193,7 @@ export default function GalaxyParticles() {
           velocities[i3] * velocities[i3] +
           velocities[i3 + 1] * velocities[i3 + 1]
         );
-        const glow = Math.min(speed * 12, 1.0);
+        const glow = Math.min(speed * 10, 0.72);
         col[i3] = baseColors[i3] + glow * 0.5;
         col[i3 + 1] = baseColors[i3 + 1] + glow * 0.4;
         col[i3 + 2] = baseColors[i3 + 2] + glow * 0.7;

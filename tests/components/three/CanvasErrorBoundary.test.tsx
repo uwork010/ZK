@@ -33,7 +33,7 @@ describe("<CanvasErrorBoundary />", () => {
     );
     const fallback = container.querySelector('[aria-hidden="true"]');
     expect(fallback).not.toBeNull();
-    expect(fallback).toHaveClass("bg-[#050812]");
+    expect(fallback).toHaveClass("bg-galaxy-darker");
   });
 
   it("renders a custom fallback when provided", () => {

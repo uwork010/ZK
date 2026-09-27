@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import Navigation from "@/components/layout/Navigation";
 
 vi.mock("next/navigation", () => ({
@@ -28,24 +28,33 @@ describe("<Navigation />", () => {
     }
   });
 
-  it("expands nested routes from the mobile menu", () => {
+  it("opens a nested screen and returns to the main mobile menu", async () => {
     render(<Navigation />);
-    fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
-    fireEvent.click(screen.getByRole("button", { name: /expand services submenu/i }));
-    expect(screen.getByRole("link", { name: "Product Engineering" })).toHaveAttribute(
+    fireEvent.click(screen.getByRole("button", { name: "Open menu" }));
+    const menu = screen.getByRole("dialog", { name: "Mobile navigation" });
+    fireEvent.click(within(menu).getByRole("button", { name: "Open Services submenu" }));
+    expect(await within(menu).findByRole("heading", { name: "Services" })).toBeInTheDocument();
+    expect(await within(menu).findByRole("link", { name: "Web Development" })).toHaveAttribute(
       "href",
-      "/services/product-engineering",
+      "/services/web-development",
     );
+    fireEvent.click(within(menu).getByRole("button", { name: /back to menu/i }));
+    expect(await within(menu).findByRole("link", { name: /Home/ })).toHaveAttribute("href", "/");
   });
 
-  it("toggles the mobile menu and reflects aria-expanded", () => {
+  it("locks page scrolling while open and closes on Escape", async () => {
     render(<Navigation />);
-    const toggle = screen.getByLabelText(/open menu/i);
+    const toggle = screen.getByRole("button", { name: "Open menu" });
     expect(toggle).toHaveAttribute("aria-expanded", "false");
     fireEvent.click(toggle);
-    expect(toggle).toHaveAttribute("aria-expanded", "true");
-    fireEvent.click(toggle);
-    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(document.documentElement.style.overflow).toBe("hidden");
+    expect(document.documentElement).toHaveAttribute("data-mobile-menu-open", "true");
+    fireEvent.keyDown(window, { key: "Escape" });
+    await waitFor(() => {
+      expect(screen.queryByRole("dialog", { name: "Mobile navigation" })).not.toBeInTheDocument();
+      expect(document.documentElement.style.overflow).toBe("");
+      expect(document.documentElement).not.toHaveAttribute("data-mobile-menu-open");
+    });
   });
 
   it("uses aria-current='page' on the active route", () => {

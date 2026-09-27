@@ -13,17 +13,17 @@ describe("<GlassCard />", () => {
     expect(inner).toBeInTheDocument();
     const card = inner.parentElement!;
     expect(card.className).toMatch(/glass/);
-    expect(card.className).toMatch(/rounded-2xl/);
+    expect(card.className).toMatch(/rounded-xl/);
   });
 
-  it("applies hover-shadow classes when hover=true (default)", () => {
+  it("applies the restrained glass hover treatment by default", () => {
     render(
       <GlassCard>
         <p>x</p>
       </GlassCard>,
     );
     const card = screen.getByText("x").parentElement!;
-    expect(card.className).toMatch(/hover:shadow-lg/);
+    expect(card.className).toMatch(/glass-hover/);
   });
 
   it("omits hover classes when hover=false", () => {
@@ -33,7 +33,7 @@ describe("<GlassCard />", () => {
       </GlassCard>,
     );
     const card = screen.getByText("x").parentElement!;
-    expect(card.className).not.toMatch(/hover:shadow-lg/);
+    expect(card.className).not.toMatch(/glass-hover/);
   });
 
   it("merges extra className", () => {

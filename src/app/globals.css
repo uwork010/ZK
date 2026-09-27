@@ -1,19 +1,39 @@
 @import "tailwindcss";
 
+:root {
+  --bg-primary: #07101b;
+  --bg-secondary: #0a1322;
+  --bg-tertiary: #0d1624;
+  --surface-glass: rgba(14, 28, 45, 0.66);
+  --surface-glass-hover: rgba(19, 31, 48, 0.86);
+  --accent-blue: #5b7cff;
+  --accent-violet: #8b6cff;
+  --accent-violet-light: #b9a9ff;
+  --accent-magenta: #e766a8;
+  --accent-warm: #f3a36b;
+  --text-primary: #f5f1eb;
+  --text-secondary: #98a3b3;
+  --border-cool: rgba(124, 171, 210, 0.22);
+  --glow-blue: color-mix(in srgb, var(--accent-blue) 8%, transparent);
+  --glow-violet: color-mix(in srgb, var(--accent-violet) 7%, transparent);
+  --glow-magenta: color-mix(in srgb, var(--accent-magenta) 3%, transparent);
+  --grid-line: rgba(145, 188, 215, 0.05);
+  --scene-fallback-vignette: rgba(3, 9, 19, 0.5);
+}
+
 @theme inline {
-  /* Galaxy Color Palette */
-  --color-galaxy-darker: #050812;
-  --color-galaxy-dark: #0a0e27;
-  --color-galaxy-light: #1a1f3a;
-  --color-primary: #8154ff;
-  --color-primary-light: #a37fff;
-  --color-secondary: #00f5ff;
-  --color-accent: #ff006e;
-  --color-nebula-warm: #ff6030;
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #a1b1c7;
-  --color-glass-bg: rgba(255, 255, 255, 0.04);
-  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-galaxy-darker: var(--bg-primary);
+  --color-galaxy-dark: var(--bg-secondary);
+  --color-galaxy-light: var(--bg-tertiary);
+  --color-primary: var(--accent-violet);
+  --color-primary-light: var(--accent-violet-light);
+  --color-secondary: var(--accent-magenta);
+  --color-accent: var(--accent-blue);
+  --color-nebula-warm: var(--accent-warm);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-glass-bg: var(--surface-glass);
+  --color-glass-border: var(--border-cool);
 
   /* Fonts */
   --font-sans: var(--font-inter);
@@ -37,7 +57,10 @@ html {
 }
 
 body {
-  background: var(--color-galaxy-darker);
+  background:
+    radial-gradient(ellipse at 78% 8%, color-mix(in srgb, var(--accent-blue) 11%, transparent), transparent 35%),
+    radial-gradient(ellipse at 12% 42%, color-mix(in srgb, var(--accent-violet) 7%, transparent), transparent 32%),
+    var(--bg-primary);
   color: var(--color-text-primary);
   font-family: var(--font-sans), system-ui, sans-serif;
   overflow-x: hidden;
@@ -50,22 +73,112 @@ body {
 
 /* Selection */
 ::selection {
-  background: rgba(129, 84, 255, 0.4);
-  color: white;
+  background: color-mix(in srgb, var(--accent-violet) 28%, transparent);
+  color: var(--text-primary);
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(129, 84, 255, 0.3); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(129, 84, 255, 0.6); }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--accent-violet) 24%, transparent); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--accent-violet) 42%, transparent); }
 
 /* Glass morphism */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent-violet) 4%, transparent), transparent 42%),
+    linear-gradient(315deg, var(--glow-magenta), transparent 48%),
+    var(--surface-glass);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-cool);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 6%, transparent), 0 18px 55px rgba(1, 8, 19, 0.28);
+}
+
+.glass-hover:hover {
+  background-color: var(--surface-glass-hover);
+  border-color: color-mix(in srgb, var(--accent-violet) 30%, transparent);
+}
+
+.hero-readability-overlay {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--bg-primary) 6%, transparent) 0%,
+    color-mix(in srgb, var(--bg-primary) 40%, transparent) 68%,
+    color-mix(in srgb, var(--bg-primary) 74%, transparent) 100%
+  );
+}
+
+.hero-edge-shade {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg-primary) 15%, transparent), transparent 40%, color-mix(in srgb, var(--bg-primary) 65%, transparent));
+}
+
+.fallback-atmosphere {
+  background: radial-gradient(ellipse at center, transparent 20%, color-mix(in srgb, var(--bg-primary) 88%, transparent) 100%);
+}
+
+.mobile-menu-backdrop {
+  background: color-mix(in srgb, var(--bg-primary) 52%, transparent);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.mobile-menu-panel {
+  background:
+    radial-gradient(ellipse at 85% 10%, color-mix(in srgb, var(--accent-violet) 7%, transparent), transparent 40%),
+    color-mix(in srgb, var(--bg-primary) 60%, transparent);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.atmosphere-services {
+  background-image:
+    radial-gradient(ellipse at 80% 12%, var(--glow-violet), transparent 38%),
+    radial-gradient(ellipse at 8% 60%, var(--glow-blue), transparent 34%);
+}
+
+.atmosphere-solutions {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    radial-gradient(ellipse at 72% 8%, var(--glow-violet), transparent 45%);
+  background-size: 48px 48px, 48px 48px, auto;
+}
+
+.atmosphere-industries {
+  background-image:
+    radial-gradient(ellipse at 85% 18%, color-mix(in srgb, var(--accent-blue) 10%, transparent), transparent 40%),
+    radial-gradient(ellipse at 15% 70%, var(--glow-magenta), transparent 38%);
+}
+
+.atmosphere-work {
+  background-image:
+    radial-gradient(ellipse at 76% 10%, var(--glow-violet), transparent 40%),
+    radial-gradient(ellipse at 20% 58%, var(--glow-blue), transparent 42%);
+}
+
+.atmosphere-about {
+  background-image: radial-gradient(ellipse at 72% 12%, var(--glow-violet), transparent 43%);
+}
+
+.atmosphere-insights {
+  background-image:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent-violet) 5.5%, transparent), transparent 38%),
+    radial-gradient(ellipse at 88% 42%, var(--glow-blue), transparent 42%);
+}
+
+.atmosphere-contact {
+  background-image:
+    linear-gradient(135deg, transparent 49.85%, var(--grid-line) 50%, transparent 50.15%),
+    radial-gradient(ellipse at 84% 24%, var(--glow-blue), transparent 36%),
+    radial-gradient(ellipse at 12% 72%, var(--glow-violet), transparent 40%);
+  background-size: 42px 42px, auto, auto;
+}
+
+html[data-mobile-menu-open="true"] [data-whatsapp-widget] {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
 }
 
 /* Hero name line reveal — CSS (not GSAP) so it always completes, even if
@@ -90,16 +203,16 @@ body {
   position: relative;
   background: linear-gradient(
     90deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.08) 45%,
-    rgba(255,255,255,0.4) 50%,
-    rgba(255,255,255,0.08) 55%,
-    rgba(255,255,255,0) 100%
+    color-mix(in srgb, var(--text-primary) 0%, transparent) 0%,
+    color-mix(in srgb, var(--text-primary) 8%, transparent) 45%,
+    color-mix(in srgb, var(--text-primary) 38%, transparent) 50%,
+    color-mix(in srgb, var(--text-primary) 8%, transparent) 55%,
+    color-mix(in srgb, var(--text-primary) 0%, transparent) 100%
   );
   background-size: 250% 100%;
   background-clip: text;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: rgba(255,255,255,0.95);
+  -webkit-text-fill-color: var(--text-primary);
   animation: shimmer 4s ease-in-out infinite;
   filter: none;
 }
@@ -111,7 +224,7 @@ body {
 
 /* Gradient text — section headings */
 .gradient-text {
-  background: linear-gradient(135deg, #8154ff 0%, #00f5ff 50%, #a37fff 100%);
+  background: linear-gradient(115deg, var(--accent-violet) 0%, var(--accent-blue) 46%, var(--accent-magenta) 100%);
   background-size: 200% 200%;
   animation: gradient-shift 6s ease infinite;
   -webkit-background-clip: text;
@@ -139,7 +252,7 @@ body {
 
 /* Smooth focus rings */
 *:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--accent-violet);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -163,8 +276,8 @@ body {
   width: auto;
   height: auto;
   padding: 0.75rem 1.5rem;
-  background: var(--color-primary);
-  color: white;
+  background: var(--accent-violet);
+  color: var(--bg-primary);
   border-radius: 0.75rem;
   font-weight: 600;
   font-size: 0.875rem;
@@ -173,6 +286,7 @@ body {
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
+  body { cursor: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

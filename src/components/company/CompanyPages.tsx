@@ -5,24 +5,27 @@ import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import type { CompanyEntry } from "@/lib/company-content";
 
+export type PageAtmosphere = "services" | "solutions" | "industries" | "work" | "about" | "insights" | "contact";
+
 interface CollectionPageProps {
   title: string;
   eyebrow: string;
   description: string;
   basePath: string;
   entries: CompanyEntry[];
+  atmosphere: PageAtmosphere;
 }
 
-function PageBackdrop() {
-  return <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(129,84,255,0.12),transparent_42%)]" />;
+function PageBackdrop({ atmosphere }: { atmosphere: PageAtmosphere }) {
+  return <div aria-hidden="true" className={`pointer-events-none absolute inset-0 atmosphere-${atmosphere}`} />;
 }
 
-export function CollectionPage({ title, eyebrow, description, basePath, entries }: CollectionPageProps) {
+export function CollectionPage({ title, eyebrow, description, basePath, entries, atmosphere }: CollectionPageProps) {
   const reducedMotion = useReducedMotion();
 
   return (
     <main id="main-content" className="relative min-h-screen overflow-hidden px-6 pb-24 pt-36 sm:px-10 lg:px-16">
-      <PageBackdrop />
+      <PageBackdrop atmosphere={atmosphere} />
       <div className="relative mx-auto max-w-6xl">
         <header className="grid gap-8 border-b border-white/[0.08] pb-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:gap-16 lg:pb-16">
           <div>
@@ -42,7 +45,7 @@ export function CollectionPage({ title, eyebrow, description, basePath, entries 
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: reducedMotion ? 0 : 0.45, delay: reducedMotion ? 0 : index * 0.06 }}
-              className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-galaxy-dark/45 transition-colors hover:border-primary/30 hover:bg-galaxy-dark/75"
+              className="glass glass-hover group relative overflow-hidden rounded-xl transition-colors"
             >
               <Link href={`${basePath}/${entry.slug}`} className="flex h-full min-h-64 flex-col p-6 sm:p-7">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary-light/80">{entry.eyebrow}</span>
@@ -60,12 +63,12 @@ export function CollectionPage({ title, eyebrow, description, basePath, entries 
   );
 }
 
-export function DetailPage({ entry, backHref, backLabel }: { entry: CompanyEntry; backHref: string; backLabel: string }) {
+export function DetailPage({ entry, backHref, backLabel, atmosphere }: { entry: CompanyEntry; backHref: string; backLabel: string; atmosphere: PageAtmosphere }) {
   const reducedMotion = useReducedMotion();
 
   return (
     <main id="main-content" className="relative min-h-screen overflow-hidden px-6 pb-24 pt-36 sm:px-10 lg:px-16">
-      <PageBackdrop />
+      <PageBackdrop atmosphere={atmosphere} />
       <motion.article
         initial={reducedMotion ? false : { opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -82,7 +85,7 @@ export function DetailPage({ entry, backHref, backLabel }: { entry: CompanyEntry
             <h1 className="font-display text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">{entry.title}</h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-text-secondary">{entry.summary}</p>
           </div>
-          <div className="self-end rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6 sm:p-8">
+          <div className="glass self-end rounded-xl p-6 sm:p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.15em] text-text-secondary/70">Areas to explore</p>
             <ul className="mt-5 space-y-3">
               {entry.focusAreas.map((area) => (
@@ -100,7 +103,7 @@ export function DetailPage({ entry, backHref, backLabel }: { entry: CompanyEntry
           </div>
           <div className="flex flex-col items-start justify-center rounded-2xl border border-primary/15 bg-primary/[0.04] p-6 sm:p-8">
             <p className="text-sm leading-6 text-text-secondary">Have a related challenge or an early idea?</p>
-            <Link href="/contact" className="mt-5 inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-light">
+            <Link href="/contact" className="mt-5 inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-galaxy-darker transition-colors hover:bg-primary-light">
               Start a Project <ArrowRight size={15} />
             </Link>
           </div>
@@ -110,17 +113,18 @@ export function DetailPage({ entry, backHref, backLabel }: { entry: CompanyEntry
   );
 }
 
-export function CompanyInfoPage({ eyebrow, title, intro, sections }: {
+export function CompanyInfoPage({ eyebrow, title, intro, sections, atmosphere = "about" }: {
   eyebrow: string;
   title: string;
   intro: string;
   sections: { title: string; body: string }[];
+  atmosphere?: PageAtmosphere;
 }) {
   const reducedMotion = useReducedMotion();
 
   return (
     <main id="main-content" className="relative min-h-screen overflow-hidden px-6 pb-24 pt-36 sm:px-10 lg:px-16">
-      <PageBackdrop />
+      <PageBackdrop atmosphere={atmosphere} />
       <motion.div initial={reducedMotion ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : 0.5 }} className="relative mx-auto max-w-5xl">
         <p className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary-light"><span className="h-px w-8 bg-primary/70" />{eyebrow}</p>
         <h1 className="max-w-4xl font-display text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">{title}</h1>

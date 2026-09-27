@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { personalInfo } from "@/lib/constants";
 
 export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
@@ -65,7 +64,7 @@ export default function Preloader() {
               transition={{ delay: 0.6 }}
               className="font-display text-lg tracking-widest text-text-secondary"
             >
-              {personalInfo.name}
+              Technology Company
             </motion.span>
           </motion.div>
         </motion.div>

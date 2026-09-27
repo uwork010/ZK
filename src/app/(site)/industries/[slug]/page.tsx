@@ -19,5 +19,5 @@ export default async function IndustryDetail({ params }: Props) {
   const { slug } = await params;
   const entry = industryEntries.find((item) => item.slug === slug);
   if (!entry) notFound();
-  return <DetailPage entry={entry} backHref="/industries" backLabel="All industries" />;
+  return <DetailPage entry={entry} backHref="/industries" backLabel="All industries" atmosphere="industries" />;
 }

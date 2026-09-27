@@ -31,7 +31,7 @@ export default class CanvasErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         this.props.fallback ?? (
-          <div className="fixed inset-0 -z-10 bg-[#050812]" aria-hidden="true" />
+          <div className="fixed inset-0 -z-10 bg-galaxy-darker" aria-hidden="true" />
         )
       );
     }

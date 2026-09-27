@@ -370,6 +370,7 @@ export default function SolarSystem() {
   return (
     <group ref={groupRef}>
       <pointLight position={[CX, CY, CZ]} intensity={12} color="#fff5e0" distance={60} decay={1.5} />
+      <pointLight position={[CX - 9, CY + 6, CZ + 6]} intensity={0} color="#fff5e0" distance={45} decay={2} />
       <ambientLight intensity={0.03} />
       <Sun />
       {PLANET_CONFIGS.map((c, i) => <OrbitRing key={`o-${i}`} radius={c.orbitRadius} />)}

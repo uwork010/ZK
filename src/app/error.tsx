@@ -16,7 +16,7 @@ export default function Error({
 
   return (
     <div className="relative z-10 flex h-screen flex-col items-center justify-center px-6 text-center">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#050812_80%)]" />
+      <div className="fallback-atmosphere absolute inset-0" />
 
       <div className="relative z-10 max-w-md">
         <span className="font-display text-6xl font-bold gradient-text sm:text-7xl">
@@ -33,7 +33,7 @@ export default function Error({
 
         <button
           onClick={reset}
-          className="mt-8 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-primary-light hover:shadow-lg hover:shadow-primary/20"
+          className="mt-8 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-galaxy-darker transition-colors hover:bg-primary-light"
         >
           <RefreshCw size={16} />
           Try Again

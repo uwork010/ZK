@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Preload } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import GalaxyParticles from "./GalaxyParticles";
 import StarField from "./StarField";
@@ -22,7 +22,18 @@ function SceneReadySignal() {
   return null;
 }
 
-export default function GalaxyCanvas() {
+function AmbientCamera() {
+  const { camera } = useThree();
+
+  useEffect(() => {
+    camera.position.set(0, 3, 16);
+    camera.lookAt(0, 0, 0);
+  }, [camera]);
+
+  return null;
+}
+
+export default function GalaxyCanvas({ isHome }: { isHome: boolean }) {
   const q = useQuality();
   const [frameloop, setFrameloop] = useState<"always" | "never">("always");
 
@@ -38,12 +49,12 @@ export default function GalaxyCanvas() {
 
   return (
     <div
-      className="fixed inset-0 z-0"
+      className="pointer-events-none fixed inset-0 z-0"
       aria-hidden="true"
       role="presentation"
       style={
         !q.postProcessing
-          ? { boxShadow: "inset 0 0 200px rgba(0,0,0,0.5)" }
+          ? { boxShadow: "inset 0 0 200px var(--scene-fallback-vignette)" }
           : undefined
       }
     >
@@ -56,14 +67,14 @@ export default function GalaxyCanvas() {
         }}
         dpr={q.dpr}
         frameloop={frameloop}
-        style={{ background: "transparent" }}
+        style={{ background: "transparent", pointerEvents: "none" }}
       >
         <Suspense fallback={null}>
           <SceneReadySignal />
-          <ScrollCamera />
+          {isHome ? <ScrollCamera /> : <AmbientCamera />}
           <StarField />
-          <GalaxyParticles />
-          <SolarSystem />
+          <GalaxyParticles ambient={!isHome} />
+          {isHome && <SolarSystem />}
           {q.postProcessing && (
             <EffectComposer>
               <Bloom

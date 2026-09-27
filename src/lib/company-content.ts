@@ -1,3 +1,5 @@
+import { agencyServiceGroups, projects } from "@/lib/constants";
+
 export interface CompanyEntry {
   slug: string;
   title: string;
@@ -8,32 +10,29 @@ export interface CompanyEntry {
   sample?: boolean;
 }
 
-export const serviceEntries: CompanyEntry[] = [
-  {
-    slug: "product-engineering",
-    title: "Product Engineering",
-    eyebrow: "Services / Product engineering",
-    summary: "Plan, design, and build digital products around real user and business needs.",
-    description: "A flexible product engineering engagement can span discovery, interface design, application development, and ongoing iteration. Scope and delivery approach are shaped around the product rather than a fixed package.",
-    focusAreas: ["Product discovery", "Web and mobile applications", "Design systems", "Quality engineering"],
-  },
-  {
-    slug: "data-ai",
-    title: "Data & AI",
-    eyebrow: "Services / Data and AI",
-    summary: "Turn data workflows and AI ideas into useful, maintainable software.",
-    description: "Explore data foundations, machine learning, and AI-enabled workflows with a focus on clear use cases, responsible implementation, and systems that teams can operate.",
-    focusAreas: ["Data platforms", "Applied machine learning", "AI product integration", "Analytics and visualization"],
-  },
-  {
-    slug: "cloud-platforms",
-    title: "Cloud & Platforms",
-    eyebrow: "Services / Cloud and platforms",
-    summary: "Build dependable cloud foundations for modern software products.",
-    description: "Platform work can include architecture, deployment automation, observability, and modernization planning. The right path depends on existing systems, constraints, and operational needs.",
-    focusAreas: ["Cloud architecture", "Platform engineering", "DevOps automation", "Application modernization"],
-  },
-];
+const serviceDetails: Record<string, Omit<CompanyEntry, "slug" | "title" | "eyebrow">> = {
+  "web-development": { summary: "Websites and web applications shaped around the intended audience and use case.", description: "A web engagement can range from a focused site to an application with tailored workflows. The experience, architecture, and delivery scope should follow the project requirements.", focusAreas: ["Websites", "Web applications", "Frontend systems"] },
+  "mobile-app-development": { summary: "Mobile product experiences for the platforms and workflows a project requires.", description: "Mobile work may include product definition, interface design, implementation, and release preparation. Platform choices and scope are determined with the project team.", focusAreas: ["iOS and Android concepts", "Cross-platform apps", "Mobile product design"] },
+  "mvp-product-development": { summary: "Shape an early product into a focused, testable digital experience.", description: "MVP and product work begins by clarifying the core use case and identifying the smallest useful scope. This is a service direction, not a claim of past delivery outcomes.", focusAreas: ["Product discovery", "Prototype definition", "First-release planning"] },
+  "custom-software": { summary: "Software designed for needs that off-the-shelf tools do not address.", description: "Custom software engagements can connect interfaces, business rules, and integrations around a specific workflow. Architecture and implementation are scoped to the actual requirements.", focusAreas: ["Workflow applications", "API integrations", "Internal tools"] },
+  "ai-automation": { summary: "AI-enabled features and automation grounded in clear, reviewable workflows.", description: "AI and automation work starts with a concrete task, appropriate data boundaries, and a human review model. Technical choices depend on the use case and risk profile.", focusAreas: ["AI product features", "Workflow automation", "Human review controls"] },
+  "game-development": { summary: "Interactive game experiences across mechanics, systems, and presentation.", description: "Game development can bring together gameplay systems, technical implementation, and visual direction. Platform, scope, and production approach depend on the concept.", focusAreas: ["Interactive prototypes", "Game systems", "Real-time experiences"] },
+  "quality-assurance": { summary: "Quality practices that make software behavior easier to verify and maintain.", description: "Quality assurance can include test planning, automation, exploratory testing, and release checks. Coverage and acceptance criteria should reflect product risks and team context.", focusAreas: ["Test strategy", "Automated testing", "Release confidence"] },
+  "cloud-devops": { summary: "Cloud foundations and delivery workflows for modern software products.", description: "Cloud and DevOps work may address infrastructure, deployment automation, and operational visibility. Recommendations should fit the existing environment and team capabilities.", focusAreas: ["Cloud architecture", "CI/CD workflows", "Observability"] },
+  "ui-ux-design": { summary: "Research-informed interface and experience design for digital products.", description: "UI/UX design connects user needs, information structure, interaction patterns, and visual systems. The process is shaped to the project’s audience and constraints.", focusAreas: ["Experience flows", "Interface systems", "Prototyping"] },
+  "graphic-design-branding": { summary: "Visual identity and graphic design for products, campaigns, and digital touchpoints.", description: "Graphic design and branding can establish a coherent visual language across a product or communication system. Identity work should be grounded in the organization’s real positioning.", focusAreas: ["Visual identity", "Digital assets", "Brand applications"] },
+  "3d-video-creative": { summary: "3D, motion, and video work for expressive digital experiences.", description: "Creative production can combine 3D, animation, video, and interactive elements. Medium and production scope depend on the intended experience and delivery context.", focusAreas: ["3D content", "Motion design", "Video and interactive media"] },
+  "maintenance-support": { summary: "Ongoing software care shaped around a product’s operational needs.", description: "Maintenance and support may include updates, issue resolution, and incremental improvement. Service expectations and response arrangements must be agreed for each engagement.", focusAreas: ["Maintenance planning", "Technical updates", "Ongoing improvements"] },
+};
+
+export const serviceEntries: CompanyEntry[] = agencyServiceGroups.flatMap((group) =>
+  group.services.map(({ slug, title }) => ({
+    slug,
+    title,
+    eyebrow: `Services / ${group.name}`,
+    ...serviceDetails[slug],
+  })),
+);
 
 export const solutionEntries: CompanyEntry[] = [
   {
@@ -89,26 +88,15 @@ export const industryEntries: CompanyEntry[] = [
   },
 ];
 
-export const workEntries: CompanyEntry[] = [
-  {
-    slug: "operations-intelligence",
-    title: "Operations Intelligence",
-    eyebrow: "Sample / Demo concept",
-    summary: "A concept for bringing operational signals into one clear workspace.",
-    description: "This sample concept explores how a team might review activity, identify exceptions, and inspect supporting information in one interface. It is illustrative placeholder content, not a client engagement or a report of delivered results.",
-    focusAreas: ["Concept interface", "Operational data views", "Exception review flow"],
-    sample: true,
-  },
-  {
-    slug: "connected-product-platform",
-    title: "Connected Product Platform",
-    eyebrow: "Sample / Demo concept",
-    summary: "A concept for a digital product spanning customer and operations workflows.",
-    description: "This sample concept sketches a connected product experience and the platform capabilities that could support it. It is a design and architecture placeholder, not a named customer project or a claim of measured outcomes.",
-    focusAreas: ["Product experience", "Service integrations", "Platform foundations"],
-    sample: true,
-  },
-];
+export const workEntries: CompanyEntry[] = projects.map((project) => ({
+  slug: project.id,
+  title: project.title,
+  eyebrow: "Sample / Demo concept",
+  summary: project.technologies.join(" · "),
+  description: project.description,
+  focusAreas: project.technologies,
+  sample: true,
+}));
 
 export const insightEntries: CompanyEntry[] = [
   {

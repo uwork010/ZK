@@ -1,11 +1,15 @@
 "use client";
 
 import { type ReactNode } from "react";
+import { useReducedMotion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap-config";
 
 export default function ProjectSnapZone({ children }: { children: ReactNode }) {
+  const reducedMotion = useReducedMotion();
+
   useGSAP(() => {
+    if (reducedMotion) return;
     const panels = gsap.utils.toArray<HTMLElement>('section[id^="project-"]');
     if (panels.length === 0) return;
 
@@ -41,7 +45,7 @@ export default function ProjectSnapZone({ children }: { children: ReactNode }) {
       trackers.forEach((st) => st.kill());
       snapTrigger.kill();
     };
-  }, []);
+  }, [reducedMotion]);
 
   return <>{children}</>;
 }

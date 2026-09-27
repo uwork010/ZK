@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Digital products, data, AI, and platform services.",
     start_url: "/",
     display: "standalone",
-    background_color: "#050812",
-    theme_color: "#8154ff",
+    background_color: "#050b16",
+    theme_color: "#66dff7",
     orientation: "portrait-primary",
     categories: ["business", "productivity"],
     icons: [

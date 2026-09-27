@@ -1,12 +1,6 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
 import Hero from "@/components/sections/Hero";
-import { personalInfo } from "@/lib/constants";
-
-const scrollToMock = vi.fn();
-vi.mock("lenis/react", () => ({
-  useLenis: () => ({ scrollTo: scrollToMock }),
-}));
 
 vi.mock("@gsap/react", () => ({
   useGSAP: (cb: () => void) => cb(),
@@ -17,6 +11,8 @@ vi.mock("@/lib/gsap-config", () => ({
     timeline: () => {
       const tl = {
         from: () => tl,
+        isActive: () => false,
+        progress: () => 1,
       };
       return tl;
     },
@@ -24,49 +20,38 @@ vi.mock("@/lib/gsap-config", () => ({
   },
 }));
 
-beforeEach(() => {
-  scrollToMock.mockReset();
-  document.body.innerHTML +=
-    '<section id="projects" /><section id="contact" />';
-});
-
 afterEach(() => {
   document.body.innerHTML = "";
   vi.restoreAllMocks();
 });
 
 describe("<Hero />", () => {
-  it("renders the personal name as a heading", () => {
+  it("renders the company positioning as the main heading", () => {
     render(<Hero />);
-    // Hero splits the name by word with a non-breaking space; query by level only
-    // and assert each word is present in the accessible name.
     const heading = screen.getByRole("heading", { level: 1 });
-    for (const word of personalInfo.name.split(" ")) {
-      expect(heading.textContent).toContain(word);
-    }
+    expect(heading.textContent).toContain("From Idea to");
+    expect(heading.textContent).toContain("Digital");
+    expect(heading.textContent).toContain("Experience.");
   });
 
-  it("shows the title and subtitle from constants", () => {
+  it("shows agency positioning and the requested support copy", () => {
     render(<Hero />);
-    expect(screen.getByText(personalInfo.title)).toBeInTheDocument();
-    expect(screen.getByText(personalInfo.subtitle)).toBeInTheDocument();
+    expect(screen.getByText(/full-service technology & creative agency/i)).toBeInTheDocument();
+    expect(screen.getByText(/websites, apps, games, and creative experiences/i)).toBeInTheDocument();
   });
 
-  it("scrolls to #projects when 'View My Work' is clicked", () => {
+  it("links to the project contact route", () => {
     render(<Hero />);
-    fireEvent.click(screen.getByRole("button", { name: /view my work/i }));
-    expect(scrollToMock).toHaveBeenCalledOnce();
-    expect(scrollToMock.mock.calls[0][1]).toEqual({ offset: -80 });
+    expect(screen.getByRole("link", { name: /start a project/i })).toHaveAttribute("href", "/contact");
   });
 
-  it("scrolls to #contact when 'Get in Touch' is clicked", () => {
+  it("links to the work overview", () => {
     render(<Hero />);
-    fireEvent.click(screen.getByRole("button", { name: /get in touch/i }));
-    expect(scrollToMock).toHaveBeenCalledOnce();
+    expect(screen.getByRole("link", { name: /explore our work/i })).toHaveAttribute("href", "/work");
   });
 
-  it("renders 'Available for work' badge", () => {
+  it("does not render personal availability messaging", () => {
     render(<Hero />);
-    expect(screen.getByText(/available for work/i)).toBeInTheDocument();
+    expect(screen.queryByText(/available for work/i)).not.toBeInTheDocument();
   });
 });

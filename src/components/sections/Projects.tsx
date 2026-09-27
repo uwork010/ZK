@@ -1,12 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import { ExternalLink, Github } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { projects } from "@/lib/constants";
 import GradientText from "@/components/ui/GradientText";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-
-const PLANET_NAMES = ["Earth", "Mars", "Jupiter", "Saturn"];
 
 export function ProjectsHeader() {
   return (
@@ -14,14 +12,14 @@ export function ProjectsHeader() {
       <div className="mx-auto max-w-5xl">
         <ScrollReveal>
           <div className="flex items-center gap-4">
-            <span className="font-display text-sm font-medium tracking-widest text-primary/60 uppercase">02</span>
+            <span className="font-display text-xs font-medium uppercase tracking-[0.18em] text-primary/75">02 / Work</span>
             <div className="h-px flex-1 bg-gradient-to-r from-primary/30 to-transparent" />
           </div>
           <GradientText as="h2" className="mt-4 font-display text-3xl font-bold sm:text-4xl md:text-5xl">
-            Featured Projects
+            Selected Work Concepts
           </GradientText>
           <p className="mt-4 max-w-md text-text-secondary">
-            Each planet represents a project. Scroll to explore.
+            SAMPLE / DEMO CONCEPTS — illustrative directions, not client case studies or claims of results.
           </p>
         </ScrollReveal>
       </div>
@@ -35,46 +33,20 @@ export function ProjectDetail({ index }: { index: number }) {
 
   return (
     <div className="flex h-full items-center justify-end px-6 sm:px-12 lg:pr-24 lg:pl-[42%]">
-      <div className="w-full max-w-xl rounded-3xl border border-white/[0.04] bg-[#050812]/90 p-8 text-center backdrop-blur-xl sm:p-10">
+      <div className="glass w-full max-w-xl rounded-xl p-6 text-center sm:p-9">
         {/* Badge */}
         <ScrollReveal>
-          <span className="badge rounded-full border border-primary/20 bg-primary/5 text-xs font-semibold uppercase tracking-widest text-primary-light">
-            {PLANET_NAMES[index]} — Project {String(index + 1).padStart(2, "0")}
+          <span className="badge rounded-full border border-primary/20 bg-primary/5 text-[10px] font-semibold uppercase tracking-[0.14em] text-primary-light">
+            Sample / Demo Concept · {String(index + 1).padStart(2, "0")}
           </span>
         </ScrollReveal>
 
         {/* Logo + Title */}
         <ScrollReveal delay={0.05}>
           <div className="mt-6 flex flex-col items-center gap-4">
-            {project.image && (
-              <div className={`relative h-[96px] w-[96px] overflow-hidden rounded-2xl border p-3 ${
-                project.id === "clutchlabs"
-                  ? "border-white/10 bg-white/90 shadow-lg shadow-primary/10"
-                  : "border-glass-border bg-galaxy-dark/50"
-              }`}>
-                <Image
-                  src={project.image}
-                  alt={`${project.title} logo`}
-                  fill
-                  sizes="96px"
-                  className="rounded-xl object-contain p-3"
-                />
-              </div>
-            )}
             <h3 className="font-display text-2xl font-bold text-white sm:text-3xl">
               {project.title}
             </h3>
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="badge gap-1.5 rounded-full bg-white/10 text-xs font-semibold text-white transition-all hover:bg-white/20 hover:scale-105"
-              >
-                <Github size={14} />
-                Github repo link
-              </a>
-            )}
           </div>
         </ScrollReveal>
 
@@ -99,19 +71,11 @@ export function ProjectDetail({ index }: { index: number }) {
                 {tech}
               </span>
             ))}
-            {project.demoUrl && (
-              <a
-                href={project.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="badge group gap-2 rounded-full bg-primary text-xs font-semibold text-white transition-all hover:bg-primary-light hover:shadow-lg hover:shadow-primary/20"
-              >
-                <ExternalLink size={12} />
-                Live Demo
-              </a>
-            )}
           </div>
         </ScrollReveal>
+        <Link href="/work" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-light transition-colors hover:text-white">
+          Explore all work concepts <ArrowRight size={15} />
+        </Link>
       </div>
     </div>
   );

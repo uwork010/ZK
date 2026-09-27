@@ -12,7 +12,7 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDesktopMenu, setOpenDesktopMenu] = useState<string | null>(null);
-  const [openMobileMenu, setOpenMobileMenu] = useState<string | null>(null);
+  const [mobileScreen, setMobileScreen] = useState<string | null>(null);
   const pathname = usePathname();
   const reducedMotion = useReducedMotion();
 
@@ -30,13 +30,45 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const root = document.documentElement;
+    const body = document.body;
+    const previousRootOverflow = root.style.overflow;
+    const previousBodyOverflow = body.style.overflow;
+
+    if (mobileOpen) {
+      root.dataset.mobileMenuOpen = "true";
+      root.style.overflow = "hidden";
+      body.style.overflow = "hidden";
+    }
+
+    return () => {
+      delete root.dataset.mobileMenuOpen;
+      root.style.overflow = previousRootOverflow;
+      body.style.overflow = previousBodyOverflow;
+    };
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+        setMobileScreen(null);
+        setOpenDesktopMenu(null);
+      }
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [mobileOpen]);
+
   const currentPathname = pathname ?? "/";
   const isActive = (href: string) =>
     href === "/" ? currentPathname === "/" : currentPathname === href || currentPathname.startsWith(`${href}/`);
 
   const closeMenus = () => {
     setMobileOpen(false);
-    setOpenMobileMenu(null);
+    setMobileScreen(null);
     setOpenDesktopMenu(null);
   };
 
@@ -77,7 +109,7 @@ export default function Navigation() {
                     isActive(item.href) ? "text-white" : "text-text-secondary hover:text-white"
                   )}
                 >
-                  {isActive(item.href) && <motion.span layoutId="nav-active" className="absolute inset-0 rounded-xl border border-primary/20 bg-primary/15" transition={reducedMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 30 }} />}
+                  {isActive(item.href) && <motion.span layoutId="nav-active" className="absolute inset-0 rounded-xl border border-primary/20 bg-primary/15" transition={{ duration: reducedMotion ? 0 : 0.18, ease: "easeOut" }} />}
                   <span className="relative z-10">{item.label}</span>
                 </Link>
                 {"children" in item && item.children && (
@@ -106,13 +138,19 @@ export default function Navigation() {
           </ul>
 
           <div className="hidden xl:block">
-            <Link href="/contact" onClick={closeMenus} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-primary-light">
+            <Link href="/contact" onClick={closeMenus} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-semibold text-galaxy-darker transition-colors hover:bg-primary-light">
               Start a Project <ArrowRight size={14} />
             </Link>
           </div>
 
           <button
-            onClick={() => { setMobileOpen(!mobileOpen); setOpenMobileMenu(null); }}
+            onClick={() => {
+              if (mobileOpen) closeMenus();
+              else {
+                setMobileScreen(null);
+                setMobileOpen(true);
+              }
+            }}
             className="flex h-10 w-10 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 xl:hidden"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
@@ -121,47 +159,122 @@ export default function Navigation() {
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
 
-          <AnimatePresence>
-            {mobileOpen && (
-              <motion.div
-                initial={reducedMotion ? false : { opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: reducedMotion ? 0 : 0.2 }}
-                id="mobile-nav-menu"
-                className="glass absolute inset-x-0 top-[calc(100%+0.75rem)] max-h-[calc(100vh-6rem)] overflow-y-auto rounded-2xl border border-white/[0.08] p-3 shadow-2xl shadow-black/40 xl:hidden"
-              >
-                <ul className="flex flex-col gap-1">
-                  {navigationGroups.map((item) => (
-                    <li key={item.href}>
-                      <div className="flex items-center gap-1">
-                        <Link href={item.href} onClick={closeMenus} aria-current={isActive(item.href) ? "page" : undefined} className={cn("flex-1 rounded-xl px-4 py-3 text-sm font-medium", isActive(item.href) ? "bg-primary/15 text-white" : "text-text-secondary hover:bg-white/5 hover:text-white")}>
-                          {item.label}
-                        </Link>
-                        {"children" in item && item.children && (
-                          <button type="button" aria-label={`${openMobileMenu === item.label ? "Collapse" : "Expand"} ${item.label} submenu`} aria-expanded={openMobileMenu === item.label} onClick={() => setOpenMobileMenu(openMobileMenu === item.label ? null : item.label)} className="rounded-xl p-3 text-text-secondary hover:bg-white/5 hover:text-white">
-                            <ChevronDown size={16} className={cn("transition-transform", openMobileMenu === item.label && "rotate-180")} />
-                          </button>
-                        )}
-                      </div>
-                      {"children" in item && item.children && openMobileMenu === item.label && (
-                        <ul className="ml-4 border-l border-primary/20 pl-3">
-                          {item.children.map((child) => (
-                            <li key={child.href}><Link href={child.href} onClick={closeMenus} className="block rounded-lg px-3 py-2.5 text-sm text-text-secondary hover:bg-white/5 hover:text-white">{child.label}</Link></li>
-                          ))}
-                        </ul>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/contact" onClick={closeMenus} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-light">
-                  Start a Project <ArrowRight size={15} />
-                </Link>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </motion.nav>
+
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.button
+              type="button"
+              aria-label="Dismiss navigation menu"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: reducedMotion ? 0 : 0.2 }}
+              onClick={closeMenus}
+              className="mobile-menu-backdrop fixed inset-0 z-[60] cursor-default xl:hidden"
+            />
+            <motion.div
+              id="mobile-nav-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile navigation"
+              initial={reducedMotion ? false : { opacity: 0, x: 18 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={reducedMotion ? undefined : { opacity: 0, x: 18 }}
+              transition={{ duration: reducedMotion ? 0 : 0.24, ease: "easeOut" }}
+              className="mobile-menu-panel fixed inset-0 z-[61] flex flex-col px-6 pb-6 pt-28 xl:hidden sm:px-10"
+            >
+              <button
+                type="button"
+                onClick={closeMenus}
+                aria-label="Close navigation menu"
+                className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-xl border border-glass-border text-text-secondary transition-colors hover:text-white"
+              >
+                <X size={18} />
+              </button>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={mobileScreen ?? "main-menu"}
+                  initial={reducedMotion ? false : { opacity: 0, x: mobileScreen ? 28 : -28 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={reducedMotion ? undefined : { opacity: 0, x: mobileScreen ? -28 : 28 }}
+                  transition={{ duration: reducedMotion ? 0 : 0.2, ease: "easeOut" }}
+                  className="min-h-0 flex-1 overflow-y-auto"
+                >
+                  {mobileScreen ? (
+                    <MobileSubmenu
+                      label={mobileScreen}
+                      closeMenus={closeMenus}
+                      onBack={() => setMobileScreen(null)}
+                    />
+                  ) : (
+                    <ul className="mx-auto max-w-lg divide-y divide-white/[0.08]">
+                      {navigationGroups.map((item, index) => (
+                        <li key={item.href} className="flex items-center justify-between gap-4 py-1">
+                          <Link
+                            href={item.href}
+                            onClick={closeMenus}
+                            aria-current={isActive(item.href) ? "page" : undefined}
+                            className={cn(
+                              "flex-1 py-3 font-display text-2xl font-medium tracking-tight transition-colors sm:text-3xl",
+                              isActive(item.href) ? "text-primary-light" : "text-white hover:text-primary-light",
+                            )}
+                          >
+                            <span className="mr-4 inline-block w-6 align-middle font-sans text-[10px] font-medium tracking-wider text-text-secondary/55">0{index + 1}</span>
+                            {item.label}
+                          </Link>
+                          {"children" in item && item.children && (
+                            <button
+                              type="button"
+                              aria-label={`Open ${item.label} submenu`}
+                              onClick={() => setMobileScreen(item.label)}
+                              className="rounded-full border border-glass-border p-3 text-primary-light transition-colors hover:bg-primary/10"
+                            >
+                              <ArrowRight size={18} />
+                            </button>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+              <div className="mx-auto w-full max-w-lg pt-4">
+                <Link href="/contact" onClick={closeMenus} className="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-primary px-6 py-4 text-sm font-semibold text-galaxy-darker transition-colors hover:bg-primary-light">
+                  Start a Project <ArrowRight size={16} />
+                </Link>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
+  );
+}
+
+function MobileSubmenu({ label, closeMenus, onBack }: { label: string; closeMenus: () => void; onBack: () => void }) {
+  const group = navigationGroups.find((item) => item.label === label);
+  if (!group || !("children" in group) || !group.children) return null;
+
+  return (
+    <div className="mx-auto max-w-lg">
+      <button type="button" onClick={onBack} className="inline-flex items-center gap-2 rounded-lg py-2 text-sm font-medium text-text-secondary transition-colors hover:text-white">
+        <ChevronDown size={15} className="rotate-90" /> Back to menu
+      </button>
+      <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary-light">Explore</p>
+      <h2 className="mt-2 font-display text-3xl font-semibold text-white">{group.label}</h2>
+      <Link href={group.href} onClick={closeMenus} className="mt-6 flex items-center justify-between border-b border-white/[0.08] py-4 text-base font-medium text-primary-light">
+        All {group.label} <ArrowRight size={16} />
+      </Link>
+      <ul className="divide-y divide-white/[0.06]">
+        {group.children.map((child) => (
+          <li key={child.href}>
+            <Link href={child.href} onClick={closeMenus} className="block py-4 text-lg text-text-secondary transition-colors hover:text-white">{child.label}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

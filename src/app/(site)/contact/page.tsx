@@ -5,8 +5,7 @@ export const metadata: Metadata = { title: "Contact", description: "Start a conv
 
 export default function ContactPage() {
   return (
-    <main id="main-content" className="relative min-h-screen overflow-hidden px-6 pb-24 pt-36 sm:px-10 lg:px-16">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(129,84,255,0.12),transparent_42%)]" />
+    <main id="main-content" className="atmosphere-contact relative min-h-screen overflow-hidden px-6 pb-24 pt-36 sm:px-10 lg:px-16">
       <div className="relative mx-auto max-w-5xl">
         <p className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary-light"><span className="h-px w-8 bg-primary/70" />Contact</p>
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">

@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import Skills from "@/components/sections/Skills";
-import { skillCategories } from "@/lib/constants";
+import { agencyServiceGroups } from "@/lib/constants";
 
 vi.mock("@gsap/react", () => ({
   useGSAP: (cb: () => void) => cb(),
@@ -17,24 +17,24 @@ describe("<Skills />", () => {
   it("renders the section heading", () => {
     render(<Skills />);
     expect(
-      screen.getByRole("heading", { level: 2, name: /skills & technologies/i }),
+      screen.getByRole("heading", { level: 2, name: /what we do/i }),
     ).toBeInTheDocument();
   });
 
-  it("renders all category headings", () => {
+  it("renders all service discipline headings", () => {
     render(<Skills />);
-    for (const cat of skillCategories) {
+    for (const cat of agencyServiceGroups) {
       expect(
         screen.getByRole("heading", { level: 3, name: cat.name }),
       ).toBeInTheDocument();
     }
   });
 
-  it("renders every skill name", () => {
+  it("renders each agency service", () => {
     render(<Skills />);
-    for (const cat of skillCategories) {
-      for (const skill of cat.skills) {
-        expect(screen.getAllByText(skill.name).length).toBeGreaterThanOrEqual(1);
+    for (const group of agencyServiceGroups) {
+      for (const service of group.services) {
+        expect(screen.getAllByText(service.title).length).toBeGreaterThanOrEqual(1);
       }
     }
   });

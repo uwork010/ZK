@@ -12,6 +12,14 @@ vi.mock("@/lib/gsap-config", () => ({
   gsap: { quickTo: quickToMock },
 }));
 
+vi.mock("framer-motion", () => ({
+  useReducedMotion: () => false,
+}));
+
+vi.mock("@/hooks/useMediaQuery", () => ({
+  useIsTouchDevice: () => false,
+}));
+
 beforeEach(() => {
   quickToMock.mockClear();
   // Force non-touch.
