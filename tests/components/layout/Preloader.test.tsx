@@ -18,12 +18,12 @@ afterEach(() => {
 describe("<Preloader />", () => {
   it("renders the preloader UI on mount", () => {
     render(<Preloader />);
-    expect(screen.getByText(/Technology Company/i)).toBeInTheDocument();
+    expect(screen.getByText(/CORE & CRAFT/i)).toBeInTheDocument();
   });
 
   it("hides after fonts + scene-ready + min wait have all resolved", async () => {
     render(<Preloader />);
-    expect(screen.getByText(/Technology Company/i)).toBeInTheDocument();
+    expect(screen.getByText(/CORE & CRAFT/i)).toBeInTheDocument();
 
     // Dispatch scene-ready immediately
     act(() => {
@@ -45,13 +45,13 @@ describe("<Preloader />", () => {
 
     // The preloader's removal is animated; confirm dismissal triggers (wait, then check)
     // Use queryByText since the element may exit but still be in the DOM mid-animation.
-    const heading = screen.queryByText(/Technology Company/i);
+    const heading = screen.queryByText(/CORE & CRAFT/i);
     expect(heading === null || heading.closest("[style*='opacity']")).toBeTruthy();
   });
 
   it("uses the 5/3-second fallback if scene-ready never fires", async () => {
     render(<Preloader />);
-    expect(screen.getByText(/Technology Company/i)).toBeInTheDocument();
+    expect(screen.getByText(/CORE & CRAFT/i)).toBeInTheDocument();
 
     // Don't dispatch scene-ready; the fallback timer will resolve at 3s
     await act(async () => {

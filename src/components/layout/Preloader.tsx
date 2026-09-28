@@ -64,7 +64,7 @@ export default function Preloader() {
               transition={{ delay: 0.6 }}
               className="font-display text-lg tracking-widest text-text-secondary"
             >
-              Technology Company
+              CORE &amp; CRAFT
             </motion.span>
           </motion.div>
         </motion.div>

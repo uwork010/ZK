@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export const alt = "Technology Company — Digital Products, Data & Platforms";
+export const alt = "CORE & CRAFT — From Idea to Digital Experience";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -77,7 +77,7 @@ export default function Image() {
                 background: "#4ade80",
               }}
             />
-            DIGITAL PRODUCTS · DATA · PLATFORMS
+            FULL-SERVICE TECHNOLOGY & CREATIVE AGENCY
           </div>
 
           {/* Name */}
@@ -92,7 +92,7 @@ export default function Image() {
               marginTop: 8,
             }}
           >
-            Technology Company
+            CORE & CRAFT
           </div>
 
           {/* Divider */}
@@ -113,7 +113,7 @@ export default function Image() {
               fontWeight: 500,
             }}
           >
-            Digital Products, Data & Platforms
+            From Idea to Digital Experience.
           </div>
 
           {/* Subtitle */}
@@ -127,7 +127,7 @@ export default function Image() {
               marginTop: 4,
             }}
           >
-            Exploring technology services, solutions, and ideas
+            We build digital products, software, AI solutions, websites, apps, games, and creative experiences from idea to launch.
           </div>
         </div>
       </div>

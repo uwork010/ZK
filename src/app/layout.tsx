@@ -3,39 +3,41 @@ import { inter, spaceGrotesk } from "./fonts";
 import Providers from "./providers";
 import "./globals.css";
 
-const SITE_URL = "https://pedromarques.dev";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL
+  ? new URL(process.env.NEXT_PUBLIC_SITE_URL).origin
+  : undefined;
+const BRAND_NAME = "CORE & CRAFT";
+const BRAND_DESCRIPTION =
+  "We build digital products, software, AI solutions, websites, apps, games, and creative experiences from idea to launch.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  ...(SITE_URL ? { metadataBase: new URL(SITE_URL) } : {}),
   title: {
-    default: "Technology Company | Digital Products, Data & Platforms",
-    template: "%s | Technology Company",
+    default: "CORE & CRAFT | From Idea to Digital Experience",
+    template: "%s | CORE & CRAFT",
   },
-  description:
-    "A technology company website exploring digital products, data, AI, and modern platforms.",
+  description: `Full-Service Technology & Creative Agency. ${BRAND_DESCRIPTION}`,
   keywords: [
-    "technology company",
+    "CORE & CRAFT",
+    "technology and creative agency",
     "digital products",
-    "data and AI",
-    "cloud platforms",
-    "React",
-    "Next.js",
+    "software development",
+    "AI solutions",
+    "websites and apps",
+    "game development",
   ],
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
-    title: "Technology Company | Digital Products, Data & Platforms",
-    description: "Explore technology services, solutions, work concepts, and perspectives.",
+    title: "CORE & CRAFT | From Idea to Digital Experience",
+    description: `Full-Service Technology & Creative Agency. ${BRAND_DESCRIPTION}`,
     type: "website",
     locale: "en_US",
-    siteName: "Technology Company",
-    url: SITE_URL,
+    siteName: BRAND_NAME,
+    ...(SITE_URL ? { url: SITE_URL } : {}),
   },
   twitter: {
     card: "summary_large_image",
-    title: "Technology Company | Digital Products, Data & Platforms",
-    description: "Explore technology services, solutions, work concepts, and perspectives.",
+    title: "CORE & CRAFT | From Idea to Digital Experience",
+    description: `Full-Service Technology & Creative Agency. ${BRAND_DESCRIPTION}`,
   },
   robots: {
     index: true,
@@ -51,17 +53,18 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": `${SITE_URL}/#organization`,
-      name: "Technology Company",
-      url: SITE_URL,
+      ...(SITE_URL ? { "@id": `${SITE_URL}/#organization`, url: SITE_URL } : {}),
+      name: BRAND_NAME,
+      description: "Full-Service Technology & Creative Agency.",
     },
     {
       "@type": "WebSite",
-      "@id": `${SITE_URL}/#website`,
-      url: SITE_URL,
-      name: "Technology Company",
-      description: "A technology company website exploring digital products, data, AI, and platforms.",
-      publisher: { "@id": `${SITE_URL}/#organization` },
+      ...(SITE_URL ? { "@id": `${SITE_URL}/#website`, url: SITE_URL } : {}),
+      name: BRAND_NAME,
+      description: `From Idea to Digital Experience. ${BRAND_DESCRIPTION}`,
+      publisher: SITE_URL
+        ? { "@id": `${SITE_URL}/#organization` }
+        : { "@type": "Organization", name: BRAND_NAME },
       inLanguage: "en",
     },
   ],

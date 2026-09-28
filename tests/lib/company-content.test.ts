@@ -22,16 +22,53 @@ describe("company navigation destinations", () => {
       "Web Development",
       "Mobile App Development",
       "MVP & Product Development",
-      "Custom Software",
-      "AI & Automation",
       "Game Development",
-      "Quality Assurance",
-      "Cloud & DevOps",
-      "UI/UX Design",
+      "AI & Automation",
+      "Custom Software Development",
+      "UI/UX & Product Design",
+      "Quality Assurance & Testing",
       "Graphic Design & Branding",
-      "3D / Video / Creative",
+      "3D, Video & Creative Production",
+      "Cloud, DevOps & IT Solutions",
       "Maintenance & Support",
     ]);
+    expect(serviceEntries.map(({ slug }) => slug)).toEqual([
+      "web-development",
+      "mobile-app-development",
+      "mvp-product-development",
+      "game-development",
+      "ai-automation",
+      "custom-software-development",
+      "ui-ux-product-design",
+      "quality-assurance-testing",
+      "graphic-design-branding",
+      "3d-video-creative-production",
+      "cloud-devops-it-solutions",
+      "maintenance-support",
+    ]);
+  });
+
+  it("provides complete, service-specific content for every detail route", () => {
+    for (const entry of serviceEntries) {
+      expect(entry.description.length, `${entry.slug} description`).toBeGreaterThan(40);
+      expect(entry.heroTitle.length, `${entry.slug} hero title`).toBeGreaterThan(10);
+      expect(entry.tags, `${entry.slug} tags`).toHaveLength(3);
+      expect(entry.visual, `${entry.slug} visual`).toBeTruthy();
+      expect(entry.processSteps, `${entry.slug} process`).toHaveLength(3);
+      expect(entry.offers.length, `${entry.slug} offers`).toBeGreaterThan(0);
+      expect(entry.technologies.length, `${entry.slug} technologies`).toBeGreaterThan(0);
+      expect(entry.projectTypes.length, `${entry.slug} project types`).toBeGreaterThan(0);
+      expect(entry.benefits.length, `${entry.slug} benefits`).toBeGreaterThan(0);
+      expect(entry.useCases.length, `${entry.slug} use cases`).toBeGreaterThan(0);
+      expect(entry.faqs, `${entry.slug} FAQs`).toHaveLength(2);
+    }
+  });
+
+  it("exposes every canonical service route through the Services submenu", () => {
+    const servicesMenu = navigationGroups.find((item) => item.label === "Services");
+    expect(servicesMenu && "children" in servicesMenu ? servicesMenu.children : []).toEqual(
+      serviceEntries.map(({ title, slug }) => ({ label: title, href: `/services/${slug}` })),
+    );
   });
 
   it("keeps every primary link on a defined page route", () => {

@@ -3,11 +3,16 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import Footer from "@/components/layout/Footer";
 
 const scrollToMock = vi.fn();
+const routeState = vi.hoisted(() => ({ pathname: "/about" }));
+vi.mock("next/navigation", () => ({ usePathname: () => routeState.pathname }));
 vi.mock("lenis/react", () => ({
   useLenis: () => ({ scrollTo: scrollToMock }),
 }));
 
-beforeEach(() => scrollToMock.mockReset());
+beforeEach(() => {
+  scrollToMock.mockReset();
+  routeState.pathname = "/about";
+});
 afterEach(() => vi.restoreAllMocks());
 
 describe("<Footer />", () => {
@@ -15,13 +20,42 @@ describe("<Footer />", () => {
     render(<Footer />);
     const year = new Date().getFullYear().toString();
     expect(screen.getByText(new RegExp(`${year}`))).toBeInTheDocument();
-    expect(screen.getByText(/Technology Company/i)).toBeInTheDocument();
+    expect(screen.getByText((text) => text.includes(year) && text.includes("CORE & CRAFT"))).toBeInTheDocument();
   });
 
   it("links to the legal pages", () => {
     render(<Footer />);
     expect(screen.getByRole("link", { name: "Privacy" })).toHaveAttribute("href", "/privacy");
     expect(screen.getByRole("link", { name: "Terms" })).toHaveAttribute("href", "/terms");
+  });
+
+  it("renders detailed company links and contact details on the home page", () => {
+    routeState.pathname = "/";
+    render(<Footer />);
+
+    for (const [label, href] of [
+      ["Web Development", "/services/web-development"],
+      ["Mobile App Development", "/services/mobile-app-development"],
+      ["AI & Automation", "/services/ai-automation"],
+      ["Custom Software", "/services/custom-software-development"],
+      ["UI/UX Design", "/services/ui-ux-product-design"],
+      ["Game Development", "/services/game-development"],
+      ["About", "/about"],
+      ["Work", "/work"],
+      ["Insights", "/insights"],
+      ["Contact", "/contact"],
+      ["Startups", "/solutions/digital-products"],
+      ["Business Automation", "/solutions/intelligent-workflows"],
+      ["Digital Transformation", "/solutions/modern-platforms"],
+      ["Privacy", "/privacy"],
+      ["Terms", "/terms"],
+    ]) {
+      expect(screen.getByRole("link", { name: label })).toHaveAttribute("href", href);
+    }
+
+    expect(screen.getByRole("link", { name: "uwork428@gmail.com" })).toHaveAttribute("href", "mailto:uwork428@gmail.com");
+    expect(screen.getByRole("link", { name: "+92 370 5752100" })).toHaveAttribute("href", expect.stringContaining("wa.me/923705752100"));
+    expect(screen.getByText(/© 2026 CORE & CRAFT\. All rights reserved\./)).toBeInTheDocument();
   });
 
   it("calls lenis.scrollTo(0) when 'Back to top' is clicked", () => {

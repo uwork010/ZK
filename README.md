@@ -1,6 +1,6 @@
-# Technology Company Website
+# CORE & CRAFT
 
-Multi-page technology company website architecture using the existing immersive portfolio homepage and Three.js scene as the visual foundation. The company profile, work concepts, insights, and legal pages contain clearly identified placeholder copy and need approved content before launch.
+Multi-page website for CORE & CRAFT, a Full-Service Technology & Creative Agency. The immersive homepage and Three.js scene provide the visual foundation. Company pages, sample work concepts, insights, and legal pages contain clearly identified placeholder copy and need approved content before launch.
 
 ## Routes
 
@@ -68,6 +68,7 @@ intentionally covered by Playwright instead (3D / WebGL).
 
 The contact form at `/contact` uses the existing endpoint (`src/app/api/contact/route.ts`) and needs:
 
+- `NEXT_PUBLIC_SITE_URL` — verified public origin used for canonical metadata and sitemap URLs
 - `RESEND_API_KEY` — sign up at [resend.com](https://resend.com) (free tier: 100 emails/day)
 - `CONTACT_TO_EMAIL` — where submissions are delivered
 - `CONTACT_FROM_EMAIL` — optional verified sender (defaults to Resend's onboarding sender)
@@ -89,6 +90,6 @@ src/
 │   ├── three/      # Galaxy, StarField, SolarSystem, ScrollCamera
 │   └── ui/         # GlassCard, ScrollReveal, GradientText, MagneticButton
 ├── hooks/          # useMediaQuery, useScrollProgress, useMousePosition
-├── lib/            # Company content, portfolio constants, utilities, GSAP config
+├── lib/            # Company content, sample work concepts, utilities, GSAP config
 └── types/          # TypeScript interfaces
 ```

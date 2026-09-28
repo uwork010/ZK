@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Technology Company",
-    short_name: "Technology Company",
-    description: "Digital products, data, AI, and platform services.",
+    name: "CORE & CRAFT",
+    short_name: "CORE & CRAFT",
+    description: "Full-Service Technology & Creative Agency. From Idea to Digital Experience.",
     start_url: "/",
     display: "standalone",
     background_color: "#050b16",

@@ -59,30 +59,32 @@ export default function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative flex h-full flex-col items-center justify-center px-6 text-center"
+      className="relative flex min-h-[100svh] flex-col items-center justify-center px-6 text-center"
     >
       {/* Gradient overlay for text readability */}
       <div className="hero-readability-overlay absolute inset-0" />
       <div className="hero-edge-shade absolute inset-0" />
 
-      <div className="relative z-10 max-w-6xl">
-          <div className="hero-badge mb-7 flex items-center justify-center gap-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-primary-light sm:text-xs">
-          <span className="h-px w-8 bg-primary/70" />
+      <div className="relative z-10 w-full max-w-6xl">
+        <p className="mb-4 font-display text-xl font-bold uppercase tracking-[0.16em] text-text-primary sm:mb-5 sm:text-2xl sm:tracking-[0.2em] md:text-[28px] lg:text-[30px] lg:tracking-[0.22em]">
+          CORE <span className="text-primary-light">&amp;</span> CRAFT
+        </p>
+        <div className="hero-badge mx-auto mb-6 flex max-w-full items-center justify-center gap-2 text-[9px] font-semibold uppercase tracking-[0.12em] text-primary-light sm:mb-7 sm:gap-3 sm:text-xs sm:tracking-[0.22em]">
+          <span className="hidden h-px w-8 bg-primary/70 sm:block" />
           Full-Service Technology &amp; Creative Agency
-          <span className="h-px w-8 bg-primary/70" />
+          <span className="hidden h-px w-8 bg-primary/70 sm:block" />
         </div>
 
-        <h1 className="font-display text-4xl font-bold leading-[0.98] tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
-          <span className="hero-name-line block"><span className="hero-name">From Idea to</span></span>
-          <span className="hero-name-line block"><span className="hero-name">Digital</span></span>
-          <span className="hero-name-line block"><span className="hero-name">Experience.</span></span>
+        <h1 className="font-display text-[1.75rem] font-bold leading-[1.04] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+          <span className="hero-name-line block"><span className="hero-name">From Idea to</span></span>{" "}
+          <span className="hero-name-line block"><span className="hero-name">Digital Experience.</span></span>
         </h1>
 
-        <p className="hero-title mx-auto mt-7 max-w-3xl font-display text-base font-medium leading-relaxed text-primary-light sm:text-xl md:text-2xl">
-          Digital products, software, AI solutions, websites, apps, games, and creative experiences — from idea to launch.
+        <p className="hero-title mx-auto mt-5 max-w-3xl text-sm leading-relaxed text-text-secondary sm:text-base md:text-lg">
+          We build digital products, software, AI solutions, websites, apps, games, and creative experiences from idea to launch.
         </p>
 
-        <div className="hero-subtitle mt-10 flex flex-wrap items-center justify-center gap-4 sm:gap-5">
+        <div className="hero-subtitle mt-7 flex flex-col items-stretch justify-center gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-5">
           <div className="hero-cta-btn">
             <MagneticButton href="/contact">
               Start a Project

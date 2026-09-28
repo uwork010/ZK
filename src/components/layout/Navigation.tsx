@@ -92,9 +92,10 @@ export default function Navigation() {
           "relative mx-auto flex max-w-[1500px] items-center justify-between rounded-2xl border px-3 py-2 transition-all duration-500 sm:px-4",
           isScrolled ? "glass border-white/[0.08] shadow-lg shadow-black/20" : "border-white/[0.06] bg-galaxy-darker/45 backdrop-blur-md"
         )}>
-          <Link href="/" onClick={closeMenus} className="flex shrink-0 items-center gap-2.5 rounded-xl px-2 py-1.5" aria-label="Technology Company home">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-primary/30 bg-primary/10 font-display text-xs font-bold text-primary-light">TC</span>
-            <span className="hidden text-xs font-semibold uppercase tracking-[0.16em] text-white sm:block">Technology Company</span>
+          <Link href="/" onNavigate={closeMenus} aria-current={isActive("/") ? "page" : undefined} className="flex shrink-0 items-center rounded-xl px-2 py-1.5" aria-label="CORE & CRAFT home">
+            <span className="whitespace-nowrap font-display text-xs font-bold uppercase tracking-[0.1em] text-white sm:text-[13px] sm:tracking-[0.14em]">
+              CORE <span className="font-medium text-primary-light">&amp;</span> CRAFT
+            </span>
           </Link>
 
           <ul className="hidden items-center gap-0.5 xl:flex">
@@ -102,7 +103,7 @@ export default function Navigation() {
               <li key={item.href} className="relative flex items-center" onMouseLeave={() => setOpenDesktopMenu(null)}>
                 <Link
                   href={item.href}
-                  onClick={closeMenus}
+                  onNavigate={closeMenus}
                   aria-current={isActive(item.href) ? "page" : undefined}
                   className={cn(
                     "relative rounded-xl px-3 py-2 text-[13px] font-medium transition-colors",
@@ -125,9 +126,9 @@ export default function Navigation() {
                     </button>
                     {openDesktopMenu === item.label && (
                       <div className="glass absolute left-0 top-full mt-3 min-w-60 rounded-xl border border-white/[0.08] p-2 shadow-xl shadow-black/30" onKeyDown={(event) => { if (event.key === "Escape") setOpenDesktopMenu(null); }}>
-                        <Link href={item.href} onClick={closeMenus} className="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wider text-primary-light hover:bg-white/5">Explore {item.label}</Link>
+                        <Link href={item.href} onNavigate={closeMenus} className="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wider text-primary-light hover:bg-white/5">Explore {item.label}</Link>
                         {item.children.map((child) => (
-                          <Link key={child.href} href={child.href} onClick={closeMenus} className="block rounded-lg px-3 py-2.5 text-sm text-text-secondary transition-colors hover:bg-white/5 hover:text-white">{child.label}</Link>
+                          <Link key={child.href} href={child.href} onNavigate={closeMenus} className="block rounded-lg px-3 py-2.5 text-sm text-text-secondary transition-colors hover:bg-white/5 hover:text-white">{child.label}</Link>
                         ))}
                       </div>
                     )}
@@ -138,7 +139,7 @@ export default function Navigation() {
           </ul>
 
           <div className="hidden xl:block">
-            <Link href="/contact" onClick={closeMenus} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-semibold text-galaxy-darker transition-colors hover:bg-primary-light">
+            <Link href="/contact" onNavigate={closeMenus} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-semibold text-galaxy-darker transition-colors hover:bg-primary-light">
               Start a Project <ArrowRight size={14} />
             </Link>
           </div>
@@ -215,7 +216,7 @@ export default function Navigation() {
                         <li key={item.href} className="flex items-center justify-between gap-4 py-1">
                           <Link
                             href={item.href}
-                            onClick={closeMenus}
+                            onNavigate={closeMenus}
                             aria-current={isActive(item.href) ? "page" : undefined}
                             className={cn(
                               "flex-1 py-3 font-display text-2xl font-medium tracking-tight transition-colors sm:text-3xl",
@@ -242,7 +243,7 @@ export default function Navigation() {
                 </motion.div>
               </AnimatePresence>
               <div className="mx-auto w-full max-w-lg pt-4">
-                <Link href="/contact" onClick={closeMenus} className="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-primary px-6 py-4 text-sm font-semibold text-galaxy-darker transition-colors hover:bg-primary-light">
+                <Link href="/contact" onNavigate={closeMenus} className="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-primary px-6 py-4 text-sm font-semibold text-galaxy-darker transition-colors hover:bg-primary-light">
                   Start a Project <ArrowRight size={16} />
                 </Link>
               </div>
@@ -265,13 +266,13 @@ function MobileSubmenu({ label, closeMenus, onBack }: { label: string; closeMenu
       </button>
       <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary-light">Explore</p>
       <h2 className="mt-2 font-display text-3xl font-semibold text-white">{group.label}</h2>
-      <Link href={group.href} onClick={closeMenus} className="mt-6 flex items-center justify-between border-b border-white/[0.08] py-4 text-base font-medium text-primary-light">
+      <Link href={group.href} onNavigate={closeMenus} className="mt-6 flex items-center justify-between border-b border-white/[0.08] py-4 text-base font-medium text-primary-light">
         All {group.label} <ArrowRight size={16} />
       </Link>
       <ul className="divide-y divide-white/[0.06]">
         {group.children.map((child) => (
           <li key={child.href}>
-            <Link href={child.href} onClick={closeMenus} className="block py-4 text-lg text-text-secondary transition-colors hover:text-white">{child.label}</Link>
+            <Link href={child.href} onNavigate={closeMenus} className="block py-4 text-lg text-text-secondary transition-colors hover:text-white">{child.label}</Link>
           </li>
         ))}
       </ul>

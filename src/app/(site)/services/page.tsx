@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { CollectionPage } from "@/components/company/CompanyPages";
-import { serviceEntries } from "@/lib/company-content";
+import ServicesOverview from "@/components/company/ServicesOverview";
 
-export const metadata: Metadata = { title: "Services", description: "Explore technology services across product engineering, data and AI, and cloud platforms." };
+export const metadata: Metadata = {
+  title: "Our Services",
+  description: "From software engineering and AI to design, games, cloud, and creative production, we help businesses take ideas from concept to launch and scale.",
+};
 
 export default function ServicesPage() {
-  return <CollectionPage title="Technology services" eyebrow="What we do" description="Explore flexible service areas for planning, building, and evolving digital products and platforms." basePath="/services" entries={serviceEntries} atmosphere="services" />;
+  return <ServicesOverview />;
 }
