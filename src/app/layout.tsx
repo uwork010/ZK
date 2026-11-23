@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { inter, spaceGrotesk } from "./fonts";
 import Providers from "./providers";
+import { canonicalMetadata } from "@/lib/seo";
 import "./globals.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL
@@ -12,6 +13,7 @@ const BRAND_DESCRIPTION =
 
 export const metadata: Metadata = {
   ...(SITE_URL ? { metadataBase: new URL(SITE_URL) } : {}),
+  ...canonicalMetadata("/"),
   title: {
     default: "CORE & CRAFT | From Idea to Digital Experience",
     template: "%s | CORE & CRAFT",
@@ -38,10 +40,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CORE & CRAFT | From Idea to Digital Experience",
     description: `Full-Service Technology & Creative Agency. ${BRAND_DESCRIPTION}`,
-  },
-  robots: {
-    index: true,
-    follow: true,
   },
   other: {
     google: "notranslate",

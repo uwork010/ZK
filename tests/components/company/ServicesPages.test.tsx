@@ -8,7 +8,7 @@ describe("Services overview", () => {
   it("renders all 12 service cards with three tags and canonical detail links", () => {
     render(<ServicesOverview />);
 
-    expect(screen.getByRole("heading", { level: 1, name: "Full-Service Technology & Creative Capabilities" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "Technology, Design, and Creative Expertise." })).toBeInTheDocument();
     const cards = within(screen.getByRole("region", { name: "All services" })).getAllByRole("article");
     expect(cards).toHaveLength(12);
 
@@ -16,7 +16,7 @@ describe("Services overview", () => {
       const card = within(cards[index]);
       expect(card.getByRole("heading", { name: service.title })).toBeInTheDocument();
       expect(card.getByText(service.summary)).toBeInTheDocument();
-      expect(card.getAllByRole("listitem", { name: "" })).toHaveLength(3);
+      expect(within(card.getByRole("list", { name: `${service.title} tags` })).getAllByRole("listitem")).toHaveLength(3);
       expect(card.getByRole("link", { name: "Explore Service" })).toHaveAttribute("href", `/services/${service.slug}`);
     });
 
@@ -35,6 +35,8 @@ describe("Service detail", () => {
     expect(screen.getByRole("heading", { name: "Technologies & Tools" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Types of Projects We Build" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Our Process" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Problems We Solve" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Related Services" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Benefits" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Example Use Cases" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Frequently Asked Questions" })).toBeInTheDocument();

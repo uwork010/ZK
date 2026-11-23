@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { CompanyInfoPage } from "@/components/company/CompanyPages";
+import { canonicalMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Terms", description: "Terms of use draft placeholder." };
+export const metadata: Metadata = {
+  ...canonicalMetadata("/terms"),
+  title: "Terms",
+  description: "Terms of use draft placeholder.",
+  robots: { index: false, follow: true },
+};
 
 export default function TermsPage() {
   return <CompanyInfoPage

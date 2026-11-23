@@ -11,8 +11,11 @@
   --accent-violet-light: #b9a9ff;
   --accent-magenta: #e766a8;
   --accent-warm: #f3a36b;
-  --text-primary: #f5f1eb;
-  --text-secondary: #98a3b3;
+  --text-primary: #f2f2f2;
+  --text-secondary: #b8b8b8;
+  --text-muted: #a0a0a0;
+  --text-label: #999999;
+  --text-placeholder: #858585;
   --border-cool: rgba(124, 171, 210, 0.22);
   --glow-blue: color-mix(in srgb, var(--accent-blue) 8%, transparent);
   --glow-violet: color-mix(in srgb, var(--accent-violet) 7%, transparent);
@@ -32,6 +35,9 @@
   --color-nebula-warm: var(--accent-warm);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-label: var(--text-label);
+  --color-text-placeholder: var(--text-placeholder);
   --color-glass-bg: var(--surface-glass);
   --color-glass-border: var(--border-cool);
 

@@ -1,23 +1,31 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { DetailPage } from "@/components/company/CompanyPages";
+import { notFound, permanentRedirect } from "next/navigation";
+import { IndustryDetailPage } from "@/components/company/CompanyPages";
 import { industryEntries } from "@/lib/company-content";
+import { canonicalMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return industryEntries.map(({ slug }) => ({ slug }));
+  return industryEntries.flatMap(({ slug, aliases }) => [slug, ...(aliases ?? [])].map((slug) => ({ slug })));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const entry = industryEntries.find((item) => item.slug === slug);
-  return entry ? { title: entry.title, description: entry.summary } : {};
+  const entry = industryEntries.find((item) => item.slug === slug || item.aliases?.includes(slug));
+  return entry
+    ? {
+        ...canonicalMetadata(`/industries/${entry.slug}`),
+        title: `Industries: ${entry.title}`,
+        description: entry.summary,
+      }
+    : {};
 }
 
 export default async function IndustryDetail({ params }: Props) {
   const { slug } = await params;
-  const entry = industryEntries.find((item) => item.slug === slug);
+  const entry = industryEntries.find((item) => item.slug === slug || item.aliases?.includes(slug));
   if (!entry) notFound();
-  return <DetailPage entry={entry} backHref="/industries" backLabel="All industries" atmosphere="industries" />;
+  if (entry.slug !== slug) permanentRedirect(`/industries/${entry.slug}`);
+  return <IndustryDetailPage entry={entry} />;
 }

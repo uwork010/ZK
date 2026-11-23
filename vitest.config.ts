@@ -16,7 +16,6 @@ export default defineConfig({
     css: false,
     // vmForks works on Windows where the default pool times out spawning workers.
     pool: "vmForks",
-    isolate: false,
     // Module reload + JSDOM init is slow on Windows; raise default timeouts.
     testTimeout: 30_000,
     hookTimeout: 30_000,

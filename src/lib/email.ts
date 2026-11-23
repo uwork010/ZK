@@ -29,11 +29,24 @@ export async function sendContactEmail(input: ContactInput) {
   const html = `
     <h2>New website contact</h2>
     <p><strong>From:</strong> ${escapeHtml(input.name)} &lt;${escapeHtml(input.email)}&gt;</p>
-    <p><strong>Message:</strong></p>
+    ${input.company ? `<p><strong>Company:</strong> ${escapeHtml(input.company)}</p>` : ""}
+    ${input.projectType ? `<p><strong>Project type:</strong> ${escapeHtml(input.projectType)}</p>` : ""}
+    ${input.budget ? `<p><strong>Estimated budget:</strong> ${escapeHtml(input.budget)}</p>` : ""}
+    <p><strong>Project details:</strong></p>
     <pre style="white-space:pre-wrap;font-family:ui-sans-serif,system-ui,sans-serif">${escapeHtml(input.message)}</pre>
   `;
 
-  const text = `New website contact\n\nFrom: ${input.name} <${input.email}>\n\nMessage:\n${input.message}\n`;
+  const text = [
+    "New website contact",
+    "",
+    `From: ${input.name} <${input.email}>`,
+    ...(input.company ? [`Company: ${input.company}`] : []),
+    ...(input.projectType ? [`Project type: ${input.projectType}`] : []),
+    ...(input.budget ? [`Estimated budget: ${input.budget}`] : []),
+    "",
+    `Project details:\n${input.message}`,
+    "",
+  ].join("\n");
 
   const result = await getClient().emails.send({
     from,

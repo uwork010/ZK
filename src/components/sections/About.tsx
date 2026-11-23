@@ -32,7 +32,7 @@ export default function About() {
 
           <ScrollReveal delay={0.14}>
             <div className="glass rounded-xl p-5 sm:p-6">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-text-secondary/70">A connected service spectrum</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-text-label">A connected service spectrum</p>
               <div className="mt-5 grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
                 {agencyServiceGroups.map((group) => (
                   <div key={group.name}>
@@ -48,4 +48,4 @@ export default function About() {
     </section>
   );
 }
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-text-secondary/70">A connected service spectrum</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-text-label">A connected service spectrum</p>

@@ -1,7 +1,6 @@
 import {
   Activity,
   Bot,
-  Braces,
   Cloud,
   Code2,
   Gamepad2,
@@ -75,7 +74,7 @@ export default function ServiceVisual({ kind, size = "card" }: { kind: ServiceVi
       {kind === "mvp" && (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="relative flex items-center gap-3">
-            {["Problem", "Prototype", "Launch"].map((label, index) => <div key={label} className={`relative rounded-lg border px-3 py-2 shadow-lg ${index === 1 ? "border-secondary/25 bg-secondary/[0.08]" : "border-white/10 bg-[#101522]/90"}`}><span className="block text-[8px] uppercase tracking-wider text-text-secondary/60">0{index + 1}</span><span className="mt-1 block text-[9px] font-medium text-text-primary/80">{label}</span>{index < 2 && <span className="absolute -right-3 top-1/2 h-px w-3 bg-primary-light/35" />}</div>)}
+            {["Problem", "Prototype", "Launch"].map((label, index) => <div key={label} className={`relative rounded-lg border px-3 py-2 shadow-lg ${index === 1 ? "border-secondary/25 bg-secondary/[0.08]" : "border-white/10 bg-[#101522]/90"}`}><span className="block text-[8px] uppercase tracking-wider text-text-label">0{index + 1}</span><span className="mt-1 block text-[9px] font-medium text-text-primary/80">{label}</span>{index < 2 && <span className="absolute -right-3 top-1/2 h-px w-3 bg-primary-light/35" />}</div>)}
           </div>
           <span className="absolute bottom-[17%] h-px w-[54%] bg-gradient-to-r from-transparent via-nebula-warm/25 to-transparent" />
         </div>
@@ -115,7 +114,7 @@ export default function ServiceVisual({ kind, size = "card" }: { kind: ServiceVi
 
       {kind === "qa" && (
         <div className="absolute inset-0 flex items-center justify-center gap-3">
-          {["Unit", "API", "UI"].map((label, index) => <div key={label} className="flex items-center gap-2 rounded-lg border border-white/10 bg-[#101522]/85 px-3 py-2"><span className={`flex size-5 items-center justify-center rounded-full border ${index === 1 ? "border-emerald-200/30 text-emerald-100/80" : "border-primary-light/25 text-primary-light/75"}`}><ShieldCheck size={12} /></span><span className="text-[9px] text-text-secondary/80">{label}</span></div>)}
+          {["Unit", "API", "UI"].map((label, index) => <div key={label} className="flex items-center gap-2 rounded-lg border border-white/10 bg-[#101522]/85 px-3 py-2"><span className={`flex size-5 items-center justify-center rounded-full border ${index === 1 ? "border-emerald-200/30 text-emerald-100/80" : "border-primary-light/25 text-primary-light/75"}`}><ShieldCheck size={12} /></span><span className="text-[9px] text-text-secondary">{label}</span></div>)}
         </div>
       )}
 
@@ -123,7 +122,7 @@ export default function ServiceVisual({ kind, size = "card" }: { kind: ServiceVi
         <div className="absolute inset-0 flex items-center justify-center gap-5">
           <span className="font-display text-4xl font-semibold tracking-[0.12em] text-text-primary/80">Aa</span>
           <div className="flex flex-col gap-2">{["bg-primary-light/75", "bg-secondary/75", "bg-nebula-warm/75", "bg-white/20"].map((color) => <i key={color} className={`h-3 w-14 rounded-sm ${color}`} />)}</div>
-          <span className="absolute bottom-[16%] right-[17%] text-[8px] uppercase tracking-[0.16em] text-text-secondary/60">Identity system</span>
+          <span className="absolute bottom-[16%] right-[17%] text-[8px] uppercase tracking-[0.16em] text-text-label">Identity system</span>
         </div>
       )}
 
@@ -139,7 +138,7 @@ export default function ServiceVisual({ kind, size = "card" }: { kind: ServiceVi
         <div className="absolute inset-0">
           <span className="absolute left-[16%] top-[47%] h-px w-[68%] bg-gradient-to-r from-transparent via-primary-light/35 to-transparent" />
           {[["18%", "40%"], ["36%", "27%"], ["52%", "51%"], ["69%", "32%"], ["84%", "48%"]].map(([left, top], index) => <span key={left} className={`absolute flex size-10 items-center justify-center rounded-xl border ${index === 2 ? "border-secondary/25 bg-secondary/[0.08] text-rose-100/80" : "border-white/12 bg-[#101522]/90 text-primary-light/75"}`} style={{ left, top }}><Cloud size={16} /></span>)}
-          <span className="absolute bottom-[13%] left-[37%] text-[8px] uppercase tracking-[0.15em] text-text-secondary/60">Build · Ship · Observe</span>
+          <span className="absolute bottom-[13%] left-[37%] text-[8px] uppercase tracking-[0.15em] text-text-label">Build · Ship · Observe</span>
         </div>
       )}
 

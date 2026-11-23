@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
-import { industryEntries, insightEntries, serviceEntries, solutionEntries, workEntries } from "@/lib/company-content";
+import { industryEntries, serviceEntries, solutionEntries, workEntries } from "@/lib/company-content";
+import { insightArticles } from "@/lib/insights";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
@@ -16,13 +17,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about",
     "/insights",
     "/contact",
-    "/privacy",
-    "/terms",
     ...serviceEntries.map(({ slug }) => `/services/${slug}`),
     ...solutionEntries.map(({ slug }) => `/solutions/${slug}`),
     ...industryEntries.map(({ slug }) => `/industries/${slug}`),
     ...workEntries.map(({ slug }) => `/work/${slug}`),
-    ...insightEntries.map(({ slug }) => `/insights/${slug}`),
+    ...insightArticles.map(({ slug }) => `/insights/${slug}`),
   ];
 
   return routes.map((route) => ({

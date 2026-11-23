@@ -1,22 +1,79 @@
 import { describe, expect, it } from "vitest";
 import {
   industryEntries,
-  insightEntries,
   navigationGroups,
   serviceEntries,
   solutionEntries,
   workEntries,
 } from "@/lib/company-content";
+import { insightArticles } from "@/lib/insights";
 
 const detailRoutes: Record<string, { slug: string }[]> = {
   "/services": serviceEntries,
   "/solutions": solutionEntries,
   "/industries": industryEntries,
   "/work": workEntries,
-  "/insights": insightEntries,
+  "/insights": insightArticles,
 };
 
 describe("company navigation destinations", () => {
+  it("includes the nine exact Industries categories", () => {
+    expect(industryEntries.map(({ title }) => title)).toEqual([
+      "Startups","E-commerce","Healthcare","Education","FinTech","Real Estate","Logistics","Gaming","Professional Services",
+    ]);
+    expect(industryEntries.map(({ slug }) => slug)).toEqual([
+      "startups","e-commerce","healthcare","education","fintech","real-estate","logistics","gaming","professional-services",
+    ]);
+  });
+
+  it("provides complete content for every Industry detail route", () => {
+    for (const entry of industryEntries) {
+      expect(entry.description.length).toBeGreaterThan(40);
+      expect(entry.visual).toBeTruthy();
+      expect(entry.challenges.length).toBeGreaterThan(0);
+      expect(entry.opportunities.length).toBeGreaterThan(0);
+      expect(entry.build.length).toBeGreaterThan(0);
+      expect(entry.capabilities.length).toBeGreaterThan(0);
+      expect(entry.useCases.length).toBeGreaterThan(0);
+      expect(entry.approach).toHaveLength(3);
+      expect(entry.technologies.length).toBeGreaterThan(0);
+      expect(entry.relatedServices).toHaveLength(3);
+      expect(entry.relatedSolutions.length).toBeGreaterThan(0);
+      expect(entry.faqs).toHaveLength(2);
+    }
+  });
+  it("includes the six exact Solutions categories", () => {
+    expect(solutionEntries.map(({ title }) => title)).toEqual([
+      "Startups",
+      "SaaS Companies",
+      "Business Automation",
+      "Digital Transformation",
+      "E-commerce Solutions",
+      "Enterprise Software",
+    ]);
+    expect(solutionEntries.map(({ slug }) => slug)).toEqual([
+      "startups",
+      "saas-companies",
+      "business-automation",
+      "digital-transformation",
+      "ecommerce-solutions",
+      "enterprise-software",
+    ]);
+  });
+
+  it("provides complete content for every Solution detail route", () => {
+    for (const entry of solutionEntries) {
+      expect(entry.description.length).toBeGreaterThan(40);
+      expect(entry.summary.length).toBeGreaterThan(10);
+      expect(entry.visual).toBeTruthy();
+      expect(entry.problems.length).toBeGreaterThan(0);
+      expect(entry.deliverables.length).toBeGreaterThan(0);
+      expect(entry.capabilities.length).toBeGreaterThan(0);
+      expect(entry.technologies.length).toBeGreaterThan(0);
+      expect(entry.approach).toHaveLength(3);
+      expect(entry.relatedServices).toHaveLength(3);
+    }
+  });
   it("includes the full requested services direction", () => {
     expect(serviceEntries.map(({ title }) => title)).toEqual([
       "Web Development",
@@ -24,12 +81,12 @@ describe("company navigation destinations", () => {
       "MVP & Product Development",
       "Game Development",
       "AI & Automation",
-      "Custom Software Development",
-      "UI/UX & Product Design",
-      "Quality Assurance & Testing",
+      "Custom Software",
+      "UI/UX Design",
+      "Quality Assurance",
       "Graphic Design & Branding",
-      "3D, Video & Creative Production",
-      "Cloud, DevOps & IT Solutions",
+      "3D / Video / Creative",
+      "Cloud & DevOps",
       "Maintenance & Support",
     ]);
     expect(serviceEntries.map(({ slug }) => slug)).toEqual([

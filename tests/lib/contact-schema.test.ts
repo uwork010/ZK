@@ -6,6 +6,9 @@ describe("contactSchema", () => {
     name: "Ada Lovelace",
     email: "ada@example.com",
     message: "I would love to chat about your work.",
+    company: "",
+    projectType: "",
+    budget: "",
     website: "",
   };
 
@@ -47,6 +50,22 @@ describe("contactSchema", () => {
     expect(r.success).toBe(false);
   });
 
+  it("accepts supported project information and rejects unknown options", () => {
+    const accepted = contactSchema.safeParse({
+      ...valid,
+      company: "Analytical Engines",
+      projectType: "Web Development",
+      budget: "$5,000–$10,000",
+    });
+    expect(accepted.success).toBe(true);
+
+    const rejected = contactSchema.safeParse({
+      ...valid,
+      projectType: "Something else",
+    });
+    expect(rejected.success).toBe(false);
+  });
+
   it("rejects email longer than 120 chars", () => {
     const long = "x".repeat(116) + "@a.io"; // 121 chars
     const r = contactSchema.safeParse({ ...valid, email: long });
@@ -63,9 +82,9 @@ describe("contactSchema", () => {
     expect(r.success).toBe(false);
   });
 
-  it("rejects honeypot when filled (bot)", () => {
+  it("accepts a bounded honeypot value for the route to discard", () => {
     const r = contactSchema.safeParse({ ...valid, website: "spam.example" });
-    expect(r.success).toBe(false);
+    expect(r.success).toBe(true);
   });
 
   it("defaults website to empty string when omitted", () => {

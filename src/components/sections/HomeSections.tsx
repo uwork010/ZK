@@ -205,7 +205,7 @@ function ServiceArtwork({ icon: Icon, visual, accent }: { icon: LucideIcon; visu
           <span className="absolute left-[69%] top-[25%] size-2.5 rounded-full bg-nebula-warm/80" />
           <span className="absolute left-[77%] top-[63%] size-3 rounded-full border border-secondary/50 bg-secondary/20" />
           <span className="absolute right-[10%] bottom-3 flex size-8 items-center justify-center rounded-lg border border-amber-100/15 bg-amber-100/[0.06] text-amber-100/80"><Icon size={15} /></span>
-          <p className="absolute bottom-4 left-5 text-[9px] font-medium uppercase tracking-[0.16em] text-text-secondary/70">Signals into useful actions</p>
+          <p className="absolute bottom-4 left-5 text-[9px] font-medium uppercase tracking-[0.16em] text-text-label">Signals into useful actions</p>
         </>
       )}
 
@@ -239,7 +239,7 @@ function ServiceArtwork({ icon: Icon, visual, accent }: { icon: LucideIcon; visu
         </>
       )}
 
-      <p className="absolute bottom-3 left-4 text-[9px] font-medium uppercase tracking-[0.15em] text-text-secondary/75">{visual}</p>
+      <p className="absolute bottom-3 left-4 text-[9px] font-medium uppercase tracking-[0.15em] text-text-label">{visual}</p>
       <span className={`absolute bottom-2 right-3 flex size-7 items-center justify-center rounded-lg border ${accent}`}><Icon size={13} /></span>
     </div>
   );
@@ -249,12 +249,12 @@ function ProjectPreview({ type }: { type: string }) {
   if (type === "operations") {
     return (
       <div className="relative flex h-36 items-stretch gap-3 overflow-hidden border-b border-white/[0.09] bg-[radial-gradient(ellipse_at_78%_15%,rgba(139,108,255,0.16),transparent_35%),linear-gradient(145deg,rgba(24,24,39,0.98),rgba(7,13,23,0.99)_70%)] px-4 py-4 sm:h-40 sm:px-5">
-        <div className="flex w-8 shrink-0 flex-col items-center gap-3 border-r border-white/[0.08] pr-2 pt-1 text-text-secondary/55" aria-hidden="true">
+        <div className="flex w-8 shrink-0 flex-col items-center gap-3 border-r border-white/[0.08] pr-2 pt-1 text-text-muted" aria-hidden="true">
           <PanelsTopLeft size={14} className="text-primary-light/80" /><Layers3 size={14} /><Users size={14} />
         </div>
         <div className="min-w-0 flex-1 space-y-2">
-          <div className="flex items-center justify-between gap-3"><p className="truncate text-[9px] font-medium text-text-primary/85 sm:text-[10px]">Operations workspace</p><span className="rounded-full border border-primary-light/15 bg-primary/[0.06] px-1.5 py-0.5 text-[7px] text-primary-light/75">DEMO</span></div>
-          <div className="mt-2 grid grid-cols-3 gap-1.5">{["Teams", "Workflows", "Queue"].map((label, index) => <div key={label} className="rounded-md border border-white/[0.08] bg-white/[0.025] px-1.5 py-1"><span className="block truncate text-[7px] text-text-secondary/60">{label}</span><span className={`mt-1 block h-1 rounded-full ${index === 1 ? "bg-secondary/45" : "bg-primary-light/35"}`} style={{ width: `${index === 0 ? 72 : index === 1 ? 48 : 60}%` }} /></div>)}</div>
+          <div className="flex items-center justify-between gap-3"><p className="truncate text-[9px] font-medium text-text-secondary sm:text-[10px]">Operations workspace</p><span className="rounded-full border border-primary-light/15 bg-primary/[0.06] px-1.5 py-0.5 text-[7px] text-primary-light/75">DEMO</span></div>
+          <div className="mt-2 grid grid-cols-3 gap-1.5">{["Teams", "Workflows", "Queue"].map((label, index) => <div key={label} className="rounded-md border border-white/[0.08] bg-white/[0.025] px-1.5 py-1"><span className="block truncate text-[7px] text-text-label">{label}</span><span className={`mt-1 block h-1 rounded-full ${index === 1 ? "bg-secondary/45" : "bg-primary-light/35"}`} style={{ width: `${index === 0 ? 72 : index === 1 ? 48 : 60}%` }} /></div>)}</div>
           <div className="mt-2 flex h-8 items-end gap-1 border-b border-l border-white/[0.08] px-1" aria-hidden="true">{[35, 58, 43, 78, 54, 92, 66, 84, 48, 72, 57, 88].map((height, index) => <i key={index} className={`flex-1 rounded-t-[2px] ${index === 5 ? "bg-secondary/55" : "bg-primary-light/35"}`} style={{ height: `${height}%` }} />)}</div>
         </div>
         <div className="absolute bottom-3 right-4 flex size-7 items-center justify-center rounded-lg border border-primary-light/20 bg-primary/[0.08] text-primary-light/80"><Workflow size={14} strokeWidth={1.4} /></div>
@@ -265,7 +265,7 @@ function ProjectPreview({ type }: { type: string }) {
     return (
       <div className="relative flex h-36 flex-col justify-center gap-2 overflow-hidden border-b border-white/[0.09] bg-[radial-gradient(ellipse_at_18%_20%,rgba(231,102,168,0.12),transparent_36%),linear-gradient(145deg,rgba(23,22,37,0.98),rgba(8,14,24,0.99)_68%)] px-5 sm:h-40">
         <div className="absolute right-5 top-4 size-20 rounded-full border border-primary-light/[0.08]" /><div className="absolute right-10 top-9 size-10 rounded-full border border-secondary/[0.12]" />
-        <div className="relative flex items-center gap-2 text-[9px] text-text-secondary/70"><span className="flex size-6 items-center justify-center rounded-lg border border-primary-light/20 bg-primary/[0.08] text-primary-light"><Bot size={13} /></span><span>Assistant session</span><i className="ml-auto size-1.5 rounded-full bg-emerald-200/70" /></div>
+        <div className="relative flex items-center gap-2 text-[9px] text-text-label"><span className="flex size-6 items-center justify-center rounded-lg border border-primary-light/20 bg-primary/[0.08] text-primary-light"><Bot size={13} /></span><span>Assistant session</span><i className="ml-auto size-1.5 rounded-full bg-emerald-200/70" /></div>
         <div className="relative w-fit max-w-[78%] rounded-r-lg rounded-bl-lg border border-white/[0.09] bg-white/[0.04] px-3 py-2 text-[9px] leading-4 text-text-secondary">How can I help with your order today?</div>
         <div className="relative ml-auto w-fit max-w-[75%] rounded-l-lg rounded-br-lg border border-secondary/20 bg-secondary/[0.08] px-3 py-2 text-[9px] leading-4 text-rose-100/80">I need to update my delivery details.</div>
         <div className="relative flex items-center gap-1.5 text-[7px] uppercase tracking-[0.12em] text-primary-light/60"><span className="size-1 rounded-full bg-secondary/80" />Guided response flow</div>
@@ -278,7 +278,7 @@ function ProjectPreview({ type }: { type: string }) {
         <div className="absolute left-[17%] top-7 h-24 w-20 -rotate-[10deg] rounded-xl border border-white/15 bg-[#121724]/95 p-2 shadow-xl transition-transform duration-500 group-hover:-translate-y-1"><div className="h-9 rounded-lg border border-primary-light/15 bg-[linear-gradient(135deg,rgba(139,108,255,0.2),rgba(231,102,168,0.1))]" /><i className="mt-2 block h-1 w-3/4 rounded bg-white/15" /><i className="mt-1.5 block h-1 w-1/2 rounded bg-white/10" /></div>
         <div className="relative z-10 h-28 w-[72px] rounded-[15px] border border-primary-light/30 bg-[#0d1420] p-1.5 shadow-[0_12px_32px_rgba(0,0,0,0.48)] transition-transform duration-500 group-hover:-translate-y-1"><div className="h-full rounded-[10px] bg-[linear-gradient(160deg,rgba(139,108,255,0.16),rgba(11,17,28,0.96)_50%,rgba(231,102,168,0.1))] p-2"><div className="flex items-center justify-between"><ShoppingBag size={11} className="text-primary-light" /><i className="size-2 rounded-full bg-secondary/70" /></div><i className="mt-3 block h-8 rounded-md border border-white/10 bg-white/[0.04]" /><i className="mt-2 block h-1 rounded bg-white/15" /><i className="mt-1 block h-1 w-2/3 rounded bg-white/10" /></div></div>
         <div className="absolute right-[17%] top-7 h-24 w-20 rotate-[10deg] rounded-xl border border-white/15 bg-[#121724]/95 p-2 shadow-xl transition-transform duration-500 group-hover:translate-y-1"><div className="h-9 rounded-lg border border-secondary/15 bg-[linear-gradient(135deg,rgba(243,163,107,0.16),rgba(231,102,168,0.12))]" /><i className="mt-2 block h-1 w-3/4 rounded bg-white/15" /><i className="mt-1.5 block h-1 w-1/2 rounded bg-white/10" /></div>
-        <span className="absolute bottom-3 right-5 rounded-full border border-white/10 bg-black/20 px-2 py-1 text-[7px] uppercase tracking-[0.13em] text-text-secondary/70">Browse · Book · Connect</span>
+        <span className="absolute bottom-3 right-5 rounded-full border border-white/10 bg-black/20 px-2 py-1 text-[7px] uppercase tracking-[0.13em] text-text-label">Browse · Book · Connect</span>
       </div>
     );
   }
@@ -288,7 +288,7 @@ function ProjectPreview({ type }: { type: string }) {
       <span className="absolute left-[32%] top-8 size-20 -rotate-[13deg] rounded-[18px] border border-white/20 bg-[linear-gradient(155deg,rgba(255,255,255,0.08),rgba(12,17,28,0.65)_55%,rgba(231,102,168,0.1))] shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] transition-transform duration-500 group-hover:-translate-y-1" aria-hidden="true" />
       <span className="absolute right-[23%] top-7 size-24 rotate-[28deg] rounded-full border border-secondary/25 bg-[radial-gradient(circle_at_35%_30%,rgba(255,230,204,0.2),rgba(231,102,168,0.13)_32%,rgba(139,108,255,0.08)_68%,transparent)] shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_14px_34px_rgba(0,0,0,0.3)] transition-transform duration-500 group-hover:rotate-[34deg]" aria-hidden="true" />
       <Sparkles size={18} className="relative z-10 text-orange-100/90" aria-hidden="true" />
-      <span className="absolute bottom-3 left-5 text-[7px] uppercase tracking-[0.14em] text-text-secondary/70">Illustrative render study</span>
+      <span className="absolute bottom-3 left-5 text-[7px] uppercase tracking-[0.14em] text-text-label">Illustrative render study</span>
     </div>
   );
 }
@@ -304,13 +304,13 @@ function WorkCard({ project }: { project: (typeof work)[number] }) {
         </div>
         <h3 className="mt-4 font-display text-xl font-semibold text-white sm:text-2xl">{project.title}</h3>
         <p className="mt-2 text-xs leading-5 text-text-secondary sm:text-sm sm:leading-6">{project.description}</p>
-        <p className="mt-4 text-[9px] font-semibold uppercase tracking-[0.14em] text-text-secondary/70">Services</p>
+        <p className="mt-4 text-[9px] font-semibold uppercase tracking-[0.14em] text-text-label">Services</p>
         <ul className="mt-2 flex flex-wrap gap-x-3 gap-y-1.5" aria-label={`${project.title} services`}>
           {project.services.map((service) => <li key={service} className="text-[10px] leading-4 text-text-secondary">{service}</li>)}
         </ul>
         <div className="mt-auto flex flex-wrap items-end justify-between gap-3 pt-4">
           <div>
-            <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-text-secondary/70">Technologies</p>
+            <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-text-label">Technologies</p>
             <ul className="mt-2 flex flex-wrap gap-1.5">
               {project.technologies.map((technology) => <li key={technology} className="rounded-md border border-white/[0.08] px-2 py-1 text-[9px] text-text-secondary">{technology}</li>)}
             </ul>

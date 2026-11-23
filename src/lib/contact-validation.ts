@@ -4,10 +4,14 @@
 // pull Zod's JIT probe into the client bundle (Zod v4 calls `new Function("")`
 // at module load which trips a CSP `unsafe-eval` violation in the console
 // even though the probe is in try/catch).
+import { BUDGET_RANGES, PROJECT_TYPES } from "@/lib/contact-options";
 
 export interface ContactFormData {
   name: string;
   email: string;
+  company: string;
+  projectType: string;
+  budget: string;
   message: string;
   website: string;
 }
@@ -16,11 +20,21 @@ export type ContactFieldErrors = Partial<Record<keyof ContactFormData, string[]>
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+function isOption<T extends readonly string[]>(
+  value: string,
+  options: T,
+): value is T[number] {
+  return options.some((option) => option === value);
+}
+
 export function validateContactForm(
   raw: Record<string, unknown>,
 ): { ok: true; data: ContactFormData } | { ok: false; errors: ContactFieldErrors } {
   const name = String(raw.name ?? "").trim();
   const email = String(raw.email ?? "").trim();
+  const company = String(raw.company ?? "").trim();
+  const projectType = String(raw.projectType ?? "").trim();
+  const budget = String(raw.budget ?? "").trim();
   const message = String(raw.message ?? "").trim();
   const website = String(raw.website ?? "");
 
@@ -38,6 +52,18 @@ export function validateContactForm(
     errors.email = ["Email must be at most 120 characters"];
   }
 
+  if (company.length > 120) {
+    errors.company = ["Company must be at most 120 characters"];
+  }
+
+  if (projectType && !isOption(projectType, PROJECT_TYPES)) {
+    errors.projectType = ["Select a valid project type"];
+  }
+
+  if (budget && !isOption(budget, BUDGET_RANGES)) {
+    errors.budget = ["Select a valid budget range"];
+  }
+
   if (message.length < 10) {
     errors.message = ["Message must be at least 10 characters"];
   } else if (message.length > 2000) {
@@ -51,5 +77,8 @@ export function validateContactForm(
   }
 
   if (Object.keys(errors).length > 0) return { ok: false, errors };
-  return { ok: true, data: { name, email, message, website } };
+  return {
+    ok: true,
+    data: { name, email, company, projectType, budget, message, website },
+  };
 }

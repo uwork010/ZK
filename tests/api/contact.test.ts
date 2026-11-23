@@ -78,11 +78,11 @@ describe("POST /api/contact", () => {
     expect(sendMock).not.toHaveBeenCalled();
   });
 
-  it("silently ACKs honeypot-filled submissions (no email sent)", async () => {
+  it("silently ACKs honeypot-filled submissions without sending email", async () => {
     const { POST } = await loadRoute();
     const res = await POST(makeReq({ ...VALID, website: "spam.example" }));
-    // Schema actually rejects non-empty website with 400 — confirm no email sent regardless.
-    expect(res.status).toBeGreaterThanOrEqual(200);
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ ok: true });
     expect(sendMock).not.toHaveBeenCalled();
   });
 

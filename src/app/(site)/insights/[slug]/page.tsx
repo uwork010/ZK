@@ -1,23 +1,30 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { DetailPage } from "@/components/company/CompanyPages";
-import { insightEntries } from "@/lib/company-content";
+import InsightArticlePage from "@/components/insights/InsightArticlePage";
+import { insightArticles } from "@/lib/insights";
+import { canonicalMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return insightEntries.map(({ slug }) => ({ slug }));
+  return insightArticles.map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const entry = insightEntries.find((item) => item.slug === slug);
-  return entry ? { title: entry.title, description: entry.summary } : {};
+  const article = insightArticles.find((item) => item.slug === slug);
+  return article
+    ? {
+        ...canonicalMetadata(`/insights/${article.slug}`),
+        title: article.title,
+        description: article.summary,
+      }
+    : {};
 }
 
 export default async function InsightDetail({ params }: Props) {
   const { slug } = await params;
-  const entry = insightEntries.find((item) => item.slug === slug);
-  if (!entry) notFound();
-  return <DetailPage entry={entry} backHref="/insights" backLabel="All insights" atmosphere="insights" />;
+  const article = insightArticles.find((item) => item.slug === slug);
+  if (!article) notFound();
+  return <InsightArticlePage article={article} />;
 }

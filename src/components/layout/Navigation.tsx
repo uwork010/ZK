@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { navigationGroups } from "@/lib/company-content";
@@ -13,6 +13,7 @@ export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDesktopMenu, setOpenDesktopMenu] = useState<string | null>(null);
   const [mobileScreen, setMobileScreen] = useState<string | null>(null);
+  const navRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const reducedMotion = useReducedMotion();
 
@@ -62,6 +63,22 @@ export default function Navigation() {
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [mobileOpen]);
 
+  useEffect(() => {
+    if (!openDesktopMenu) return;
+    const closeOutside = (event: PointerEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) setOpenDesktopMenu(null);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpenDesktopMenu(null);
+    };
+    document.addEventListener("pointerdown", closeOutside);
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeOutside);
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [openDesktopMenu]);
+
   const currentPathname = pathname ?? "/";
   const isActive = (href: string) =>
     href === "/" ? currentPathname === "/" : currentPathname === href || currentPathname.startsWith(`${href}/`);
@@ -71,6 +88,12 @@ export default function Navigation() {
     setMobileScreen(null);
     setOpenDesktopMenu(null);
   };
+
+  const mobileGroups = navigationGroups.map((item) => ({
+    label: item.label,
+    href: item.href,
+    hasChildren: "children" in item && Boolean(item.children),
+  }));
 
   return (
     <>
@@ -88,7 +111,7 @@ export default function Navigation() {
         transition={{ duration: reducedMotion ? 0 : 0.8, delay: reducedMotion ? 0 : 0.5, ease: "easeOut" }}
         className="fixed inset-x-0 top-4 z-50 px-4"
       >
-        <div className={cn(
+        <div ref={navRef} className={cn(
           "relative mx-auto flex max-w-[1500px] items-center justify-between rounded-2xl border px-3 py-2 transition-all duration-500 sm:px-4",
           isScrolled ? "glass border-white/[0.08] shadow-lg shadow-black/20" : "border-white/[0.06] bg-galaxy-darker/45 backdrop-blur-md"
         )}>
@@ -100,39 +123,40 @@ export default function Navigation() {
 
           <ul className="hidden items-center gap-0.5 xl:flex">
             {navigationGroups.map((item) => (
-              <li key={item.href} className="relative flex items-center" onMouseLeave={() => setOpenDesktopMenu(null)}>
-                <Link
-                  href={item.href}
-                  onNavigate={closeMenus}
-                  aria-current={isActive(item.href) ? "page" : undefined}
-                  className={cn(
-                    "relative rounded-xl px-3 py-2 text-[13px] font-medium transition-colors",
-                    isActive(item.href) ? "text-white" : "text-text-secondary hover:text-white"
-                  )}
-                >
-                  {isActive(item.href) && <motion.span layoutId="nav-active" className="absolute inset-0 rounded-xl border border-primary/20 bg-primary/15" transition={{ duration: reducedMotion ? 0 : 0.18, ease: "easeOut" }} />}
-                  <span className="relative z-10">{item.label}</span>
-                </Link>
-                {"children" in item && item.children && (
+              <li key={item.href} className="relative flex items-center">
+                {"children" in item && item.children ? (
                   <>
                     <button
                       type="button"
                       aria-label={`${openDesktopMenu === item.label ? "Close" : "Open"} ${item.label} submenu`}
                       aria-expanded={openDesktopMenu === item.label}
                       onClick={() => setOpenDesktopMenu(openDesktopMenu === item.label ? null : item.label)}
-                      className="-ml-2 rounded-lg p-2 text-text-secondary transition-colors hover:text-white"
+                      className={cn(
+                        "relative flex items-center gap-1 rounded-xl px-3 py-2 text-[13px] font-medium transition-colors",
+                        isActive(item.href) ? "text-white" : "text-text-secondary hover:text-white"
+                      )}
                     >
-                      <ChevronDown size={13} className={cn("transition-transform", openDesktopMenu === item.label && "rotate-180")} />
+                      {isActive(item.href) && <motion.span layoutId="nav-active" className="absolute inset-0 rounded-xl border border-primary/20 bg-primary/15" />}
+                      <span className="relative z-10">{item.label}</span>
+                      <ChevronDown size={12} className={cn("relative z-10 transition-transform", openDesktopMenu === item.label && "rotate-180")} />
                     </button>
                     {openDesktopMenu === item.label && (
-                      <div className="glass absolute left-0 top-full mt-3 min-w-60 rounded-xl border border-white/[0.08] p-2 shadow-xl shadow-black/30" onKeyDown={(event) => { if (event.key === "Escape") setOpenDesktopMenu(null); }}>
-                        <Link href={item.href} onNavigate={closeMenus} className="block rounded-lg px-3 py-2 text-xs font-semibold uppercase tracking-wider text-primary-light hover:bg-white/5">Explore {item.label}</Link>
+                      <div className="glass absolute left-0 top-full mt-3 min-w-72 rounded-xl border border-white/[0.08] p-2 shadow-xl shadow-black/30">
+                        <div className="flex items-center justify-between border-b border-white/[0.07] px-3 py-2">
+                          <Link href={item.href} onNavigate={closeMenus} className="text-xs font-semibold uppercase tracking-wider text-primary-light hover:text-white">Explore {item.label}</Link>
+                          <button type="button" aria-label={`Close ${item.label} submenu`} onClick={() => setOpenDesktopMenu(null)} className="rounded-md p-1 text-text-secondary hover:text-white"><X size={14} /></button>
+                        </div>
                         {item.children.map((child) => (
                           <Link key={child.href} href={child.href} onNavigate={closeMenus} className="block rounded-lg px-3 py-2.5 text-sm text-text-secondary transition-colors hover:bg-white/5 hover:text-white">{child.label}</Link>
                         ))}
                       </div>
                     )}
                   </>
+                ) : (
+                  <Link href={item.href} onNavigate={closeMenus} aria-current={isActive(item.href) ? "page" : undefined} className={cn("relative rounded-xl px-3 py-2 text-[13px] font-medium transition-colors", isActive(item.href) ? "text-white" : "text-text-secondary hover:text-white")}>
+                    {isActive(item.href) && <motion.span layoutId="nav-active" className="absolute inset-0 rounded-xl border border-primary/20 bg-primary/15" />}
+                    <span className="relative z-10">{item.label}</span>
+                  </Link>
                 )}
               </li>
             ))}
@@ -212,29 +236,62 @@ export default function Navigation() {
                     />
                   ) : (
                     <ul className="mx-auto max-w-lg divide-y divide-white/[0.08]">
-                      {navigationGroups.map((item, index) => (
+                      {mobileGroups.map((item, index) => (
                         <li key={item.href} className="flex items-center justify-between gap-4 py-1">
-                          <Link
-                            href={item.href}
-                            onNavigate={closeMenus}
-                            aria-current={isActive(item.href) ? "page" : undefined}
-                            className={cn(
-                              "flex-1 py-3 font-display text-2xl font-medium tracking-tight transition-colors sm:text-3xl",
-                              isActive(item.href) ? "text-primary-light" : "text-white hover:text-primary-light",
-                            )}
-                          >
-                            <span className="mr-4 inline-block w-6 align-middle font-sans text-[10px] font-medium tracking-wider text-text-secondary/55">0{index + 1}</span>
-                            {item.label}
-                          </Link>
-                          {"children" in item && item.children && (
-                            <button
-                              type="button"
-                              aria-label={`Open ${item.label} submenu`}
-                              onClick={() => setMobileScreen(item.label)}
-                              className="rounded-full border border-glass-border p-3 text-primary-light transition-colors hover:bg-primary/10"
+                          {!item.hasChildren && (
+                            <Link
+                              href={item.href}
+                              onNavigate={closeMenus}
+                              aria-current={isActive(item.href) ? "page" : undefined}
+                              className={cn(
+                                "flex-1 py-3 font-display text-2xl font-medium tracking-tight transition-colors sm:text-3xl",
+                                isActive(item.href) ? "text-primary-light" : "text-white hover:text-primary-light",
+                              )}
                             >
-                              <ArrowRight size={18} />
-                            </button>
+                              <span className="mr-4 inline-block w-6 align-middle font-sans text-[10px] font-medium tracking-wider text-text-muted">0{index + 1}</span>
+                              {item.label}
+                            </Link>
+                          )}
+                          {item.hasChildren && item.label !== "Services" && item.label !== "Solutions" && item.label !== "Industries" && (
+                            <>
+                              <Link
+                                href={item.href}
+                                onNavigate={closeMenus}
+                                aria-current={isActive(item.href) ? "page" : undefined}
+                                className={cn(
+                                  "flex-1 py-3 font-display text-2xl font-medium tracking-tight transition-colors sm:text-3xl",
+                                  isActive(item.href) ? "text-primary-light" : "text-white hover:text-primary-light",
+                                )}
+                              >
+                                <span className="mr-4 inline-block w-6 align-middle font-sans text-[10px] font-medium tracking-wider text-text-muted">0{index + 1}</span>
+                                {item.label}
+                              </Link>
+                              <button
+                                type="button"
+                                aria-label={`Open ${item.label} submenu`}
+                                onClick={() => setMobileScreen(item.label)}
+                                className="rounded-full border border-glass-border p-3 text-primary-light transition-colors hover:bg-primary/10"
+                              >
+                                <ArrowRight size={18} />
+                              </button>
+                            </>
+                          )}
+                          {item.hasChildren && (item.label === "Services" || item.label === "Solutions" || item.label === "Industries") && (
+                            <>
+                              <button
+                                type="button"
+                                aria-label={`Open ${item.label} submenu`}
+                                onClick={() => setMobileScreen(item.label)}
+                                className={cn(
+                                  "flex flex-1 items-center py-3 text-left font-display text-2xl font-medium tracking-tight transition-colors sm:text-3xl",
+                                  isActive(item.href) ? "text-primary-light" : "text-white hover:text-primary-light",
+                                )}
+                              >
+                                <span className="mr-4 inline-block w-6 align-middle font-sans text-[10px] font-medium tracking-wider text-text-muted">0{index + 1}</span>
+                                {item.label}
+                              </button>
+                              <ArrowRight size={18} className="text-primary-light" aria-hidden="true" />
+                            </>
                           )}
                         </li>
                       ))}

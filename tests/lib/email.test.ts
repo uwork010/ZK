@@ -10,9 +10,12 @@ vi.mock("resend", () => ({
 const VALID = {
   name: "Ada Lovelace",
   email: "ada@example.com",
+  company: "",
+  projectType: "",
+  budget: "",
   message: "Hello there!",
   website: "",
-};
+} as const;
 
 beforeEach(() => {
   vi.resetModules();
@@ -53,6 +56,23 @@ describe("sendContactEmail", () => {
     await sendContactEmail(VALID);
 
     expect(sendMock.mock.calls[0][0].from).toBe("hello@pedromarques.dev");
+  });
+
+  it("includes submitted project information in the agency email", async () => {
+    sendMock.mockResolvedValueOnce({ data: { id: "msg_4" }, error: null });
+    const { sendContactEmail } = await import("@/lib/email");
+    await sendContactEmail({
+      ...VALID,
+      company: "Analytical Engines",
+      projectType: "Web Development",
+      budget: "$5,000–$10,000",
+    });
+
+    const arg = sendMock.mock.calls[0][0];
+    expect(arg.text).toContain("Company: Analytical Engines");
+    expect(arg.text).toContain("Project type: Web Development");
+    expect(arg.text).toContain("Estimated budget: $5,000–$10,000");
+    expect(arg.html).toContain("Project details:");
   });
 
   it("escapes HTML in name/email/message to prevent injection", async () => {

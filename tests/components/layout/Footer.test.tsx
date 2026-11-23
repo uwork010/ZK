@@ -29,6 +29,12 @@ describe("<Footer />", () => {
     expect(screen.getByRole("link", { name: "Terms" })).toHaveAttribute("href", "/terms");
   });
 
+  it("uses readable muted text for footer information", () => {
+    render(<Footer />);
+    expect(screen.getByText("Full-Service Technology & Creative Agency.")).toHaveClass("text-text-muted");
+    expect(screen.getByRole("navigation", { name: "Legal" })).toHaveClass("text-text-muted");
+  });
+
   it("renders detailed company links and contact details on the home page", () => {
     routeState.pathname = "/";
     render(<Footer />);
@@ -44,9 +50,9 @@ describe("<Footer />", () => {
       ["Work", "/work"],
       ["Insights", "/insights"],
       ["Contact", "/contact"],
-      ["Startups", "/solutions/digital-products"],
-      ["Business Automation", "/solutions/intelligent-workflows"],
-      ["Digital Transformation", "/solutions/modern-platforms"],
+      ["Startups", "/solutions/startups"],
+      ["Business Automation", "/solutions/business-automation"],
+      ["Digital Transformation", "/solutions/digital-transformation"],
       ["Privacy", "/privacy"],
       ["Terms", "/terms"],
     ]) {

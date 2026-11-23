@@ -101,14 +101,14 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <div className="hero-scroll absolute bottom-10 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-text-secondary/50">
+        <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-text-muted">
           Scroll
         </span>
         <motion.div
           animate={reducedMotion ? undefined : { opacity: [0.45, 0.9, 0.45] }}
           transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
         >
-          <ChevronDown className="h-4 w-4 text-text-secondary/50" />
+          <ChevronDown className="h-4 w-4 text-text-muted" />
         </motion.div>
       </div>
     </section>

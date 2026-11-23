@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
-import { CollectionPage } from "@/components/company/CompanyPages";
-import { insightEntries } from "@/lib/company-content";
+import InsightsOverview from "@/components/insights/InsightsOverview";
+import { canonicalMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Insights", description: "Sample editorial concepts about software, data, and technology." };
+export const metadata: Metadata = {
+  ...canonicalMetadata("/insights"),
+  title: "Insights",
+  description: "Perspectives and practical ideas on technology, digital products, AI, design, and the future of business.",
+};
 
 export default function InsightsPage() {
-  return <CollectionPage title="Ideas in progress" eyebrow="Insights" description="Draft editorial concepts for future perspectives on software, data, and product engineering." basePath="/insights" entries={insightEntries} atmosphere="insights" />;
+  return <InsightsOverview />;
 }

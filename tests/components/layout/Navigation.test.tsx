@@ -3,6 +3,8 @@ import { fireEvent, render, screen, waitFor, within } from "@testing-library/rea
 import type { ComponentProps } from "react";
 import Navigation from "@/components/layout/Navigation";
 import { serviceEntries } from "@/lib/company-content";
+import { solutionEntries } from "@/lib/company-content";
+import { industryEntries } from "@/lib/company-content";
 
 vi.mock("next/navigation", () => ({
   usePathname: () => "/",
@@ -23,9 +25,6 @@ describe("<Navigation />", () => {
     render(<Navigation />);
     for (const [label, href] of [
       ["CORE & CRAFT home", "/"],
-      ["Services", "/services"],
-      ["Solutions", "/solutions"],
-      ["Industries", "/industries"],
       ["Work", "/work"],
       ["About", "/about"],
       ["Insights", "/insights"],
@@ -34,6 +33,9 @@ describe("<Navigation />", () => {
     ]) {
       expect(screen.getByRole("link", { name: label })).toHaveAttribute("href", href);
     }
+    expect(screen.getByRole("button", { name: "Open Solutions submenu" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Open Industries submenu" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Open Services submenu" })).toBeInTheDocument();
   });
 
   it("opens a nested screen and returns to the main mobile menu", async () => {
@@ -84,6 +86,46 @@ describe("<Navigation />", () => {
     }
   });
 
+  it("keeps all six Solutions links accessible in the desktop submenu", () => {
+    render(<Navigation />);
+    const navigation = screen.getByRole("navigation", { name: "Main navigation" });
+    fireEvent.click(within(navigation).getByRole("button", { name: "Open Solutions submenu" }));
+    for (const solution of solutionEntries) {
+      expect(within(navigation).getByRole("link", { name: solution.title })).toHaveAttribute("href", `/solutions/${solution.slug}`);
+    }
+  });
+
+  it("opens and preserves the mobile Solutions submenu", async () => {
+    render(<Navigation />);
+    fireEvent.click(screen.getByRole("button", { name: "Open menu" }));
+    const menu = screen.getByRole("dialog", { name: "Mobile navigation" });
+    fireEvent.click(within(menu).getByRole("button", { name: "Open Solutions submenu" }));
+    expect(await within(menu).findByRole("heading", { name: "Solutions" })).toBeInTheDocument();
+    for (const solution of solutionEntries) {
+      expect(within(menu).getByRole("link", { name: solution.title })).toHaveAttribute("href", `/solutions/${solution.slug}`);
+    }
+  });
+
+  it("keeps all nine Industries links accessible in the desktop submenu", () => {
+    render(<Navigation />);
+    const navigation = screen.getByRole("navigation", { name: "Main navigation" });
+    fireEvent.click(within(navigation).getByRole("button", { name: "Open Industries submenu" }));
+    for (const industry of industryEntries) {
+      expect(within(navigation).getByRole("link", { name: industry.title })).toHaveAttribute("href", `/industries/${industry.slug}`);
+    }
+  });
+
+  it("opens and preserves the mobile Industries submenu", async () => {
+    render(<Navigation />);
+    fireEvent.click(screen.getByRole("button", { name: "Open menu" }));
+    const menu = screen.getByRole("dialog", { name: "Mobile navigation" });
+    fireEvent.click(within(menu).getByRole("button", { name: "Open Industries submenu" }));
+    expect(await within(menu).findByRole("heading", { name: "Industries" })).toBeInTheDocument();
+    for (const industry of industryEntries) {
+      expect(within(menu).getByRole("link", { name: industry.title })).toHaveAttribute("href", `/industries/${industry.slug}`);
+    }
+  });
+
   it("locks page scrolling while open and closes on Escape", async () => {
     render(<Navigation />);
     const toggle = screen.getByRole("button", { name: "Open menu" });
@@ -103,9 +145,10 @@ describe("<Navigation />", () => {
     render(<Navigation />);
     fireEvent.click(screen.getByRole("button", { name: "Open menu" }));
     const menu = screen.getByRole("dialog", { name: "Mobile navigation" });
-    const servicesLink = within(menu).getByRole("link", { name: /Services/ });
-    expect(servicesLink).toHaveAttribute("href", "/services");
-    fireEvent.click(servicesLink);
+    const servicesButton = within(menu).getByRole("button", { name: "Open Services submenu" });
+    fireEvent.click(servicesButton);
+    expect(await within(menu).findByRole("heading", { name: "Services" })).toBeInTheDocument();
+    fireEvent.click(within(menu).getByRole("link", { name: "All Services" }));
 
     await waitFor(() => {
       expect(screen.queryByRole("dialog", { name: "Mobile navigation" })).not.toBeInTheDocument();

@@ -1,23 +1,30 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { DetailPage } from "@/components/company/CompanyPages";
-import { workEntries } from "@/lib/company-content";
+import WorkDetailView from "@/components/work/WorkDetail";
+import { workProjects } from "@/lib/work-content";
+import { canonicalMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return workEntries.map(({ slug }) => ({ slug }));
+  return workProjects.map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const entry = workEntries.find((item) => item.slug === slug);
-  return entry ? { title: entry.title, description: entry.summary } : {};
+  const entry = workProjects.find((item) => item.slug === slug);
+  return entry
+    ? {
+        ...canonicalMetadata(`/work/${entry.slug}`),
+        title: entry.title,
+        description: entry.description,
+      }
+    : {};
 }
 
-export default async function WorkDetail({ params }: Props) {
+export default async function WorkDetailPage({ params }: Props) {
   const { slug } = await params;
-  const entry = workEntries.find((item) => item.slug === slug);
+  const entry = workProjects.find((item) => item.slug === slug);
   if (!entry) notFound();
-  return <DetailPage entry={entry} backHref="/work" backLabel="All work" atmosphere="work" />;
+  return <WorkDetailView project={entry} />;
 }

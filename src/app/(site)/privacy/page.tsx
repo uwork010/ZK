@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { CompanyInfoPage } from "@/components/company/CompanyPages";
+import { canonicalMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Privacy Policy", description: "Privacy policy draft placeholder." };
+export const metadata: Metadata = {
+  ...canonicalMetadata("/privacy"),
+  title: "Privacy Policy",
+  description: "Privacy policy draft placeholder.",
+  robots: { index: false, follow: true },
+};
 
 export default function PrivacyPage() {
   return <CompanyInfoPage

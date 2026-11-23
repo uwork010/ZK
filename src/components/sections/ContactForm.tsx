@@ -11,7 +11,7 @@ type Status =
   | { kind: "error"; message: string };
 
 const inputClass =
-  "w-full rounded-xl border border-glass-border bg-[var(--bg-primary)]/90 px-4 py-3 text-sm text-white placeholder:text-text-secondary/50 outline-none transition-colors focus:border-primary/60 focus:bg-[var(--bg-primary)] focus:ring-2 focus:ring-primary/20";
+  "w-full rounded-xl border border-glass-border bg-[var(--bg-primary)]/90 px-4 py-3 text-sm text-text-secondary placeholder:text-text-placeholder outline-none transition-colors focus:border-primary/60 focus:bg-[var(--bg-primary)] focus:ring-2 focus:ring-primary/20";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>({ kind: "idle" });

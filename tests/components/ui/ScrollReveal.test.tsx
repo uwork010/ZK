@@ -7,6 +7,10 @@ vi.mock("@/lib/gsap-config", () => ({
   gsap: { from: (...args: unknown[]) => fromMock(...args) },
 }));
 
+vi.mock("framer-motion", () => ({
+  useReducedMotion: () => false,
+}));
+
 import { useEffect } from "react";
 vi.mock("@gsap/react", () => ({
   useGSAP: (cb: () => void) => {

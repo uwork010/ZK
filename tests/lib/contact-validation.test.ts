@@ -4,6 +4,9 @@ import { validateContactForm } from "@/lib/contact-validation";
 const VALID = {
   name: "Ada Lovelace",
   email: "ada@example.com",
+  company: "",
+  projectType: "",
+  budget: "",
   message: "Hello there, let us collaborate.",
   website: "",
 };
@@ -21,6 +24,9 @@ describe("validateContactForm", () => {
       expect(r.data.name).toBe("Ada");
       expect(r.data.email).toBe("ada@example.com");
       expect(r.data.message).toBe("hello there world");
+      expect(r.data.company).toBe("");
+      expect(r.data.projectType).toBe("");
+      expect(r.data.budget).toBe("");
     }
   });
 
@@ -56,6 +62,20 @@ describe("validateContactForm", () => {
   it("rejects overlong message", () => {
     const r = validateContactForm({ ...VALID, message: "y".repeat(2001) });
     expect(r.ok).toBe(false);
+  });
+
+  it("rejects invalid project selections and accepts valid project details", () => {
+    const invalid = validateContactForm({ ...VALID, projectType: "Unknown project" });
+    expect(invalid.ok).toBe(false);
+    if (!invalid.ok) expect(invalid.errors.projectType).toBeDefined();
+
+    const valid = validateContactForm({
+      ...VALID,
+      company: "Analytical Engines",
+      projectType: "Web Development",
+      budget: "$5,000–$10,000",
+    });
+    expect(valid.ok).toBe(true);
   });
 
   it("rejects when the honeypot is filled", () => {

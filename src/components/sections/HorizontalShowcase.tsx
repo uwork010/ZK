@@ -128,7 +128,7 @@ export default function HorizontalShowcase({
 
           <div className="flex min-w-0 flex-1 items-center gap-4">
             <span aria-label={`${current} / ${total}`} aria-live="polite" aria-atomic="true" className="shrink-0 font-mono text-xs tabular-nums text-text-primary">
-              {current} <span className="text-text-secondary/60">/ {total}</span>
+              {current} <span className="text-text-muted">/ {total}</span>
             </span>
             <div
               role="progressbar"
