@@ -60,7 +60,7 @@ export const workProjects: WorkProject[] = [
     title: "MediCare",
     category: "Healthcare Software",
     filters: ["Web", "Software"],
-    classification: "Completed Project",
+    classification: "CORE & CRAFT Studio Demonstration Project",
     description: "A modern healthcare management platform designed to simplify clinic operations, patient management and appointment workflows.",
     overview: "MediCare brings important clinic operations into one organized digital workspace. The platform focuses on helping healthcare teams manage doctors, patients, appointments, medical records and billing through a centralized interface.",
     problem: "Clinic teams often rely on disconnected records and manual workflows for appointments, patient history and billing. MediCare creates a shared operational view so that routine work can move through a clear, consistent process.",

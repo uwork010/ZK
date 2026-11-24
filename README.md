@@ -2,7 +2,7 @@
 
 CORE & CRAFT is a multi-page website for a digital product, software, and creative technology agency. It pairs a dark, immersive visual identity with service, industry, solution, work, insights, and contact pages.
 
-> **Content readiness:** Work and Insights entries include illustrative/demo material and should not be presented as verified client work or published editorial without approval. Privacy and Terms are draft placeholders, intentionally excluded from indexing and the sitemap until reviewed legal copy is supplied.
+> **Content readiness:** Work entries are studio demonstrations and are not presented as verified client engagements or measured results. Legal content is published for general website use; any jurisdiction-specific terms or a formal policy for a new business entity should be reviewed before launch.
 
 ## Website
 
@@ -16,7 +16,7 @@ CORE & CRAFT is a multi-page website for a digital product, software, and creati
 | Work | `/work`, `/work/[slug]` |
 | Insights | `/insights`, `/insights/[slug]` |
 | Contact | `/contact` |
-| Legal drafts | `/privacy`, `/terms` |
+| Legal | `/privacy`, `/terms` |
 
 The navigation and service, solution, and industry detail content are driven by `src/lib/company-content.ts`. Work and article content lives in `src/lib/work-content.ts` and `src/lib/insights.ts`. Legacy detail URLs redirect to their canonical route.
 
@@ -124,7 +124,7 @@ This is a standard Next.js application; the repository has no `vercel.json` and 
 2. Use Node.js 24 and the default Next.js install/build settings (`npm ci` and `npm run build`).
 3. Configure `NEXT_PUBLIC_SITE_URL` and the Resend variables for the relevant Preview and Production environments. Use the real public origin and a Resend-verified sender address.
 4. Confirm Vercel's configured Production Branch before pushing; pushes to that branch may publish the site.
-5. Replace the draft legal copy and approve any illustrative Work or Insights content before launch.
+5. Have jurisdiction-specific legal requirements reviewed and confirm the studio portfolio classifications before launch.
 
 The production server can also be started locally after a build:
 

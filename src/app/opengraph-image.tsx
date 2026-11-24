@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export const alt = "CORE & CRAFT — From Idea to Digital Experience";
 export const size = { width: 1200, height: 630 };

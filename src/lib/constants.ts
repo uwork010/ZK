@@ -56,7 +56,7 @@ export const projects: Project[] = [
     id: "cloud-product-platform",
     title: "Cloud Product Platform",
     description:
-      "SAMPLE / DEMO CONCEPT — A platform sketch connecting product interfaces, cloud foundations, and operational tooling. It is illustrative placeholder content, not a customer case study or a claim of delivered results.",
+      "SAMPLE / DEMO CONCEPT — A platform sketch connecting product interfaces, cloud foundations, and operational tooling. It is illustrative concept content, not a customer case study or a claim of delivered results.",
     technologies: ["Cloud & DevOps", "Web Development", "Maintenance & Support"],
   },
 ];

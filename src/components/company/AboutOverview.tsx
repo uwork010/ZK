@@ -159,7 +159,7 @@ function LeadershipArtwork() {
         <path d="M149 220c9 7 20 10 31 10s22-3 31-10" fill="none" stroke="#f3a36b" strokeOpacity=".3" strokeWidth="2" />
         <path d="m99 370 39-35 42 40 42-40 39 35" fill="none" stroke="#b9a9ff" strokeOpacity=".19" strokeWidth="1.5" />
       </svg>
-      <span className="absolute left-4 top-4 rounded-full border border-white/[0.13] bg-[#080f1c]/70 px-3 py-1.5 text-[9px] font-medium uppercase tracking-[0.14em] text-text-secondary backdrop-blur sm:left-5 sm:top-5">Portrait placeholder</span>
+      <span className="absolute left-4 top-4 rounded-full border border-white/[0.13] bg-[#080f1c]/70 px-3 py-1.5 text-[9px] font-medium uppercase tracking-[0.14em] text-text-secondary backdrop-blur sm:left-5 sm:top-5">Zaffar Khan · CEO</span>
       <span className="absolute bottom-4 right-4 font-mono text-[9px] text-text-label sm:bottom-5 sm:right-5">CORE / LEADERSHIP</span>
     </div>
   );
@@ -245,14 +245,7 @@ export default function AboutOverview() {
             <div className="flex flex-col justify-center p-6 sm:p-9 lg:p-12">
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary-light">Chief Executive Officer — CORE &amp; CRAFT</p>
               <h3 className="mt-4 font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">ZAFFAR KHAN</h3>
-              <div className="mt-6 inline-flex self-start items-center gap-3 rounded-xl border border-white/[0.1] bg-white/[0.025] px-4 py-3">
-                <span className="flex size-9 items-center justify-center rounded-lg border border-nebula-warm/25 bg-nebula-warm/[0.08] text-nebula-warm"><span className="font-serif text-lg">C</span></span>
-                <span>
-                  <span className="block text-[9px] uppercase tracking-[0.15em] text-text-label">Education</span>
-                  <span className="mt-1 block text-sm font-medium text-text-primary">Graduate of the University of Cambridge</span>
-                </span>
-              </div>
-              <p className="mt-7 max-w-2xl text-sm leading-7 text-text-secondary sm:text-base sm:leading-8">
+              <p className="mt-6 max-w-2xl text-sm leading-7 text-text-secondary sm:text-base sm:leading-8">
                 Zaffar Khan leads CORE &amp; CRAFT with a focus on bringing technology, creative thinking and business objectives together. As CEO, he represents the agency’s commitment to purposeful innovation, thoughtful execution and building digital experiences that create value.
               </p>
             </div>

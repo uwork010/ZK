@@ -49,13 +49,13 @@ describe("sendContactEmail", () => {
   });
 
   it("uses CONTACT_FROM_EMAIL when set", async () => {
-    process.env.CONTACT_FROM_EMAIL = "hello@pedromarques.dev";
+    process.env.CONTACT_FROM_EMAIL = "sender@example.com";
     sendMock.mockResolvedValueOnce({ data: { id: "msg_2" }, error: null });
     const { sendContactEmail } = await import("@/lib/email");
 
     await sendContactEmail(VALID);
 
-    expect(sendMock.mock.calls[0][0].from).toBe("hello@pedromarques.dev");
+    expect(sendMock.mock.calls[0][0].from).toBe("sender@example.com");
   });
 
   it("includes submitted project information in the agency email", async () => {

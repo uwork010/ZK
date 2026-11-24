@@ -21,11 +21,11 @@ export default function WorkOverview() {
             <p className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-primary-light">
               <span className="h-px w-8 bg-primary/70" />Work
             </p>
-            <h1 className="font-display text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">Selected Work</h1>
+            <h1 className="font-display text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">Work &amp; Demonstrations</h1>
           </div>
           <div className="max-w-xl">
-            <p className="text-lg leading-8 text-text-secondary">Exploring ideas. Engineering digital products. Creating experiences that move businesses forward.</p>
-            <p className="mt-4 text-sm leading-7 text-text-secondary">Discover a selection of digital products, platforms and creative experiences that demonstrate how CORE &amp; CRAFT approaches technology, design and problem-solving.</p>
+            <p className="text-lg leading-8 text-text-secondary">Explore concept directions across digital products, platforms and creative experiences.</p>
+            <p className="mt-4 text-sm leading-7 text-text-secondary">Every project on this page is a CORE &amp; CRAFT studio demonstration and is not presented as a verified client engagement or measured commercial result.</p>
           </div>
         </header>
 

@@ -4,14 +4,14 @@ import AboutOverview from "@/components/company/AboutOverview";
 import { serviceEntries } from "@/lib/company-content";
 
 describe("<AboutOverview />", () => {
-  it("renders the requested leadership profile and placeholder without invented credentials", () => {
+  it("renders the CEO leadership profile without education claims", () => {
     render(<AboutOverview />);
 
     expect(screen.getByRole("heading", { name: "ZAFFAR KHAN" })).toBeInTheDocument();
     expect(screen.getByText("Chief Executive Officer — CORE & CRAFT")).toBeInTheDocument();
-    expect(screen.getByText("Graduate of the University of Cambridge")).toBeInTheDocument();
-    expect(screen.getByText("Portrait placeholder")).toBeInTheDocument();
-    expect(screen.queryByText(/degree|graduated in|previous employer/i)).not.toBeInTheDocument();
+    expect(screen.queryByText("Education")).not.toBeInTheDocument();
+    expect(screen.getByText("Zaffar Khan · CEO")).toBeInTheDocument();
+    expect(screen.getByText(/Zaffar Khan leads CORE & CRAFT/)).toBeInTheDocument();
   });
 
   it("links every capability to its canonical service route", () => {
