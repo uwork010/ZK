@@ -39,6 +39,9 @@ export const metadata: Metadata = {
     title: "CORE & CRAFT | From Idea to Digital Experience",
     description: `Full-Service Technology & Creative Agency. ${BRAND_DESCRIPTION}`,
   },
+  verification: {
+    google: "04aFB7aGIV9fFUPPzZPcBDegQN8sEL4YoOquozB2TOA",
+  },
   other: {
     google: "notranslate",
   },
