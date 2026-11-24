@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
 import { inter, spaceGrotesk } from "./fonts";
 import Providers from "./providers";
-import { canonicalMetadata } from "@/lib/seo";
+import { canonicalMetadata, getSiteUrl } from "@/lib/seo";
 import "./globals.css";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL
-  ? new URL(process.env.NEXT_PUBLIC_SITE_URL).origin
-  : undefined;
+const SITE_URL = getSiteUrl();
 const BRAND_NAME = "CORE & CRAFT";
 const BRAND_DESCRIPTION =
   "We build digital products, software, AI solutions, websites, apps, games, and creative experiences from idea to launch.";
 
 export const metadata: Metadata = {
-  ...(SITE_URL ? { metadataBase: new URL(SITE_URL) } : {}),
+  metadataBase: new URL(SITE_URL),
   ...canonicalMetadata("/"),
   title: {
     default: "CORE & CRAFT | From Idea to Digital Experience",
@@ -34,7 +32,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: BRAND_NAME,
-    ...(SITE_URL ? { url: SITE_URL } : {}),
+    url: SITE_URL,
   },
   twitter: {
     card: "summary_large_image",
