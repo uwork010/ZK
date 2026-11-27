@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { inter, spaceGrotesk } from "./fonts";
 import Providers from "./providers";
-import { canonicalMetadata, getSiteUrl } from "@/lib/seo";
+import { getSiteUrl } from "@/lib/seo";
+import { pageMetadata } from "@/lib/page-seo";
 import "./globals.css";
 
 const SITE_URL = getSiteUrl();
@@ -11,12 +12,11 @@ const BRAND_DESCRIPTION =
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  ...canonicalMetadata("/"),
+  ...pageMetadata("/"),
   title: {
-    default: "CORE & CRAFT | From Idea to Digital Experience",
+    default: "CORE & CRAFT | Digital Solutions & Technology Agency",
     template: "%s | CORE & CRAFT",
   },
-  description: `Full-Service Technology & Creative Agency. ${BRAND_DESCRIPTION}`,
   keywords: [
     "CORE & CRAFT",
     "technology and creative agency",
@@ -26,19 +26,6 @@ export const metadata: Metadata = {
     "websites and apps",
     "game development",
   ],
-  openGraph: {
-    title: "CORE & CRAFT | From Idea to Digital Experience",
-    description: `Full-Service Technology & Creative Agency. ${BRAND_DESCRIPTION}`,
-    type: "website",
-    locale: "en_US",
-    siteName: BRAND_NAME,
-    url: SITE_URL,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "CORE & CRAFT | From Idea to Digital Experience",
-    description: `Full-Service Technology & Creative Agency. ${BRAND_DESCRIPTION}`,
-  },
   verification: {
     google: "04aFB7aGIV9fFUPPzZPcBDegQN8sEL4YoOquozB2TOA",
   },

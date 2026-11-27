@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
 import { CompanyInfoPage } from "@/components/company/CompanyPages";
-import { canonicalMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/page-seo";
 
-export const metadata: Metadata = {
-  ...canonicalMetadata("/terms"),
-  title: "Terms",
-  description: "Terms governing use of the CORE & CRAFT website.",
-};
+export const metadata: Metadata = pageMetadata("/terms");
 
 export default function TermsPage() {
   return <CompanyInfoPage

@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
 import InsightsOverview from "@/components/insights/InsightsOverview";
-import { canonicalMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/page-seo";
 
-export const metadata: Metadata = {
-  ...canonicalMetadata("/insights"),
-  title: "Insights",
-  description: "Perspectives and practical ideas on technology, digital products, AI, design, and the future of business.",
-};
+export const metadata: Metadata = pageMetadata("/insights");
 
 export default function InsightsPage() {
   return <InsightsOverview />;

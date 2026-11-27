@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import WorkDetailView from "@/components/work/WorkDetail";
 import { workProjects } from "@/lib/work-content";
-import { canonicalMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/page-seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -14,11 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const entry = workProjects.find((item) => item.slug === slug);
   return entry
-    ? {
-        ...canonicalMetadata(`/work/${entry.slug}`),
-        title: entry.title,
-        description: entry.description,
-      }
+    ? pageMetadata(`/work/${entry.slug}`)
     : {};
 }
 

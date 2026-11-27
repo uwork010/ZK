@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import InsightArticlePage from "@/components/insights/InsightArticlePage";
 import { insightArticles } from "@/lib/insights";
-import { canonicalMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/page-seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -14,11 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const article = insightArticles.find((item) => item.slug === slug);
   return article
-    ? {
-        ...canonicalMetadata(`/insights/${article.slug}`),
-        title: article.title,
-        description: article.summary,
-      }
+    ? pageMetadata(`/insights/${article.slug}`)
     : {};
 }
 

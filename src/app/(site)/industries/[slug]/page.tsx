@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import { IndustryDetailPage } from "@/components/company/CompanyPages";
 import { industryEntries } from "@/lib/company-content";
-import { canonicalMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/page-seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -14,11 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const entry = industryEntries.find((item) => item.slug === slug || item.aliases?.includes(slug));
   return entry
-    ? {
-        ...canonicalMetadata(`/industries/${entry.slug}`),
-        title: `Industries: ${entry.title}`,
-        description: entry.summary,
-      }
+    ? pageMetadata(`/industries/${entry.slug}`)
     : {};
 }
 

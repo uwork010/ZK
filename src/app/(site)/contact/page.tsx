@@ -9,16 +9,9 @@ import {
 } from "lucide-react";
 import ProjectInquiryForm from "@/components/sections/ProjectInquiryForm";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import { canonicalMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/page-seo";
 
-export const metadata: Metadata = {
-  ...canonicalMetadata("/contact"),
-  title: {
-    absolute: "Contact CORE & CRAFT | Let’s Build Something Meaningful",
-  },
-  description:
-    "Get in touch with CORE & CRAFT to discuss web development, digital products, creative design and technology solutions.",
-};
+export const metadata: Metadata = pageMetadata("/contact");
 
 export default function ContactPage() {
   return (

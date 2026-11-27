@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
 import { CompanyInfoPage } from "@/components/company/CompanyPages";
-import { canonicalMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/page-seo";
 
-export const metadata: Metadata = {
-  ...canonicalMetadata("/privacy"),
-  title: "Privacy Policy",
-  description: "How CORE & CRAFT handles information submitted through this website.",
-};
+export const metadata: Metadata = pageMetadata("/privacy");
 
 export default function PrivacyPage() {
   return <CompanyInfoPage

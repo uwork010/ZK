@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import SolutionsOverview from "@/components/company/SolutionsOverview";
-import { canonicalMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/page-seo";
 
-export const metadata: Metadata = {
-  ...canonicalMetadata("/solutions"),
-  title: "Solutions",
-  description: "Explore startup, SaaS, automation, transformation, commerce, and enterprise software solutions.",
-};
+export const metadata: Metadata = pageMetadata("/solutions");
 
 export default function SolutionsPage() { return <SolutionsOverview />; }
